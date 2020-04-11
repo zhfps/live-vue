@@ -9,6 +9,13 @@ module.exports = {
     }
   },
   devServer: {
-    port: 9527
+    port: 9527,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8089',
+        ws: false,
+        changeOrigin: true
+      }
+    }
   }
 }
