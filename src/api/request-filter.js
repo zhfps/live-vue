@@ -19,7 +19,7 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   response => {
-    // dataAxios 是 axios 返回数据中的 data
+    // data 是 axios 返回数据中的 data
     const { code, data } = response.data
     // 根据 code 进行判断
     if (code === 200) {
