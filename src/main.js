@@ -6,6 +6,7 @@ import ElementUI from 'element-ui'
 import i18n from '@/lang'
 import SvgIcon from 'vue-svgicon'
 import '@/router/permission'
+import '@/icons/svg/index'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(VueRouter)
 Vue.use(ElementUI)

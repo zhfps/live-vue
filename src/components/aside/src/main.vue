@@ -1,21 +1,40 @@
 <template>
   <div class="zh-aside">
-    <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
-      <el-radio-button :label="false">展开</el-radio-button>
-      <el-radio-button :label="true">收起</el-radio-button>
-    </el-radio-group>
-    <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
+    <div class="switch">
+      <svg-icon
+        :name="collIcon"
+        width="18px"
+        height="18px"
+        color="#bfbfbf"
+        @click="handleColl"
+      />
+    </div>
+    <el-menu class="el-menu-vertical" :collapse="isCollapse">
+      <template v-for="(item,index) in menus">
+        <sub-menu
+          v-if="item.children && item.children.length > 0"
+          :data="item.children"
+          :key="item.name"
+          :index="item.name+index"
+          :title="item.meta.title"
+          :path="'/'+item.path"
+        />
+        <menu-item
+          v-else
+          :key="item.name"
+          :index="item.name+index"
+          :title="item.meta.title"
+          :path="'/'+item.path"
+        />
+      </template>
       <el-submenu index="1">
         <template slot="title">
-          <i class="el-icon-location"></i>
-          <span slot="title">导航一</span>
-        </template>
+        <i class="el-icon-location" />
+        <span slot="title">导航一xxxxx</span>
+      </template>
         <el-menu-item-group>
-          <span slot="title">分组一</span>
           <el-menu-item index="1-1">选项1</el-menu-item>
           <el-menu-item index="1-2">选项2</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="分组2">
           <el-menu-item index="1-3">选项3</el-menu-item>
         </el-menu-item-group>
         <el-submenu index="1-4">
@@ -24,15 +43,15 @@
         </el-submenu>
       </el-submenu>
       <el-menu-item index="2">
-        <i class="el-icon-menu"></i>
+        <i class="el-icon-menu" />
         <span slot="title">导航二</span>
       </el-menu-item>
       <el-menu-item index="3" disabled>
-        <i class="el-icon-document"></i>
+        <i class="el-icon-document" />
         <span slot="title">导航三</span>
       </el-menu-item>
       <el-menu-item index="4">
-        <i class="el-icon-setting"></i>
+        <i class="el-icon-setting" />
         <span slot="title">导航四</span>
       </el-menu-item>
     </el-menu>
@@ -41,19 +60,27 @@
 
 <script>
 import './main.scss'
+import SubMenu from '@/components/SubMenu/SubMenu'
+import MenuItem from '@/components/MenuItem/MenuItem'
+import { Test } from '@/router'
 export default {
   name: 'ZhAside',
+  components: {
+    SubMenu,
+    MenuItem
+  },
   data() {
     return {
-      isCollapse: true
+      menus: Test[0].children,
+      isCollapse: true,
+      collIcon: 'open'
     }
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath)
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath)
+    handleColl() {
+      console.log('xx')
+      this.isCollapse = !this.isCollapse
+      this.collIcon === 'open' ? (this.collIcon = 'close') : (this.collIcon = 'open')
     }
   }
 }

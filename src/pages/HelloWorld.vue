@@ -1,16 +1,15 @@
 <template>
   <div class="hello">
     <svg-icon
-      name="eye"
+      name="open"
       width="200"
       height="200"
-      color="#42b983 #35495e"
+      color="#eee"
     />
   </div>
 </template>
 
 <script>
-import '@/icons/svg/index'
 export default {
   name: 'HelloWorld',
   props: {
