@@ -4,7 +4,6 @@
       name="open"
       width="200"
       height="200"
-      color="#eee"
     />
   </div>
 </template>
