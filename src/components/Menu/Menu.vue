@@ -30,7 +30,10 @@ export default {
               attrs: { class: 'el-icon-location', color: '#eee', name: item.meta.icon }
             }),
             createElement('span', {
-              attrs: { slot: 'title' }
+              attrs: { slot: 'title' },
+              on: { click: () => {
+                console.log(item.name)
+              } }
             }, [item.name])
           ])
         }

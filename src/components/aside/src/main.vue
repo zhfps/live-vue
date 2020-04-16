@@ -33,7 +33,6 @@ export default {
   },
   methods: {
     handleColl() {
-      console.log('xx')
       this.isCollapse = !this.isCollapse
       this.collIcon === 'open' ? (this.collIcon = 'close') : (this.collIcon = 'open')
     }
