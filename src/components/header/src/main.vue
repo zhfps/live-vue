@@ -1,5 +1,16 @@
 <template>
-  <div class="zh-header">xx</div>
+  <div class="zh-header">
+    <div class="logo">
+      <span class="logo-text">It_dog</span>
+      <svg-icon
+        name="dog"
+        width="45"
+        height="45"
+        color="#42b983 #35495e"
+      />
+    </div>
+
+  </div>
 </template>
 
 <script>
