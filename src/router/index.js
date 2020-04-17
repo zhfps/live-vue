@@ -14,24 +14,24 @@ export const Test = [
         path: 'home',
         name: 'home',
         component: () => import('@/pages/Home'),
-        meta: { title: 'home', icon: 'eye' }
+        meta: { title: 'home', icon: 'dog' }
       }, {
         path: 'hello',
         name: 'hello',
         component: PageView,
-        meta: { title: 'hello', icon: 'eye' },
+        meta: { title: 'hello', icon: 'dog' },
         children: [
           {
             path: 'yy',
             name: 'home',
             component: PageView,
-            meta: { title: 'home', icon: 'eye' },
+            meta: { title: 'home', icon: 'dog' },
             children: [
               {
                 path: 'xx',
                 name: 'home',
                 component: () => import('@/pages/HelloWorld'),
-                meta: { title: 'home', icon: 'eye' }
+                meta: { title: 'home', icon: 'dog' }
               }
             ]
           }

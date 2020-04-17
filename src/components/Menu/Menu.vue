@@ -14,7 +14,7 @@ export default {
               slot: 'title'
             }, [
               createElement('svg-icon', {
-                attrs: { class: 'el-icon-location', color: '#eee', name: item.meta.icon }
+                attrs: { class: 'el-icon-location', color: '#DCDFE6', name: item.meta.icon }
               }),
               createElement('span', {
                 attrs: { slot: 'title' }
@@ -27,7 +27,7 @@ export default {
             attrs: { index: item.path, route: path + item.path }
           }, [
             createElement('svg-icon', {
-              attrs: { class: 'el-icon-location', color: '#eee', name: item.meta.icon }
+              attrs: { class: 'el-icon-location', color: '#DCDFE6', name: item.meta.icon }
             }),
             createElement('span', {
               attrs: { slot: 'title' },
