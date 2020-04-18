@@ -17,6 +17,9 @@ export default {
       require: true,
       default: 'hello world'
     }
+  },
+  created() {
+    console.log('yy')
   }
 }
 </script>
