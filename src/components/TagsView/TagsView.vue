@@ -1,17 +1,21 @@
 <template>
   <div :class="status">
-    <svg-icon
-      class="pre-icon"
-      :name="icon"
-      width="18"
-      height="18"
-    />
-    <span class="title">{{ title }}</span>
+    <router-link class="link" :to="path" @click.native="handleClick">
+      <svg-icon
+        class="pre-icon"
+        :name="icon"
+        width="18"
+        height="18"
+        :color="activeColor"
+      />
+      <span class="title"> {{ title }}</span>
+    </router-link>
     <svg-icon
       class="icon"
       name="pageclose"
       width="18"
       height="18"
+      @click.stop="handleClose(title)"
     />
   </div>
 </template>
@@ -32,7 +36,27 @@ export default {
       type: String,
       require: true,
       default: 'tag-view'
+    },
+    path: {
+      type: String,
+      require: true,
+      default: '/'
     }
+  },
+  data() {
+    return {
+      activeColor: '#409EFF',
+      color: '#eee'
+    }
+  },
+  methods: {
+    handleClose(val) {
+      this.$emit('close', val)
+    },
+    handleClick(path) {
+      this.$emit('link', path)
+    }
+
   }
 }
 </script>

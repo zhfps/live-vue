@@ -9,7 +9,7 @@
       </div>
       <div class="main-content">
         <div v-if="true" class="page-tags">
-          <tags-view v-for="(item,index) in tags" :key="index" :title="item.title" :icon="item.icon" :status="item.status" />
+          <tags-view v-for="(item,index) in tags" :key="index" :title="item.title" :icon="item.icon" :path="item.path" @close="handleClose" />
         </div>
         <div class="main">
           <div class="page">
@@ -40,12 +40,17 @@ export default {
       tags: [{
         icon: 'dog',
         title: 'home',
-        status: 'tag-view'
+        path: '/home'
       }, {
         icon: 'eye',
         title: 'index',
-        status: 'tag-view-active'
+        path: '/hello'
       }]
+    }
+  },
+  methods: {
+    handleClose(val) {
+      this.tags.splice(this.tags.findIndex(item => item.title === val), 1)
     }
   }
 }

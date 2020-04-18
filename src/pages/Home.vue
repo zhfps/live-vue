@@ -1,16 +1,16 @@
 <template>
-<!--  <el-button @click="handleLang">{{ $t('message.key') }}</el-button>-->
-    <div>{{icons}}</div>
+  <el-button @click="handleLang">{{ $t('message.key') }}</el-button>
+<!--    <div>{{icons}}</div>-->
 </template>
 
 <script>
 import { test } from '@/api/module/Test'
-import icons from '@/icons'
+// import icons from '@/icons'
 export default {
   name: 'Home',
   data() {
     return {
-      icons
+      // icons
     }
   },
   methods: {
