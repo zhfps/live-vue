@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import LayOut from '@/layout/LayOut'
-import PageView from '@/pages/PageView'
 Vue.use(VueRouter)
 export const Test = [
   {
@@ -18,24 +17,8 @@ export const Test = [
       }, {
         path: 'hello',
         name: 'hello',
-        component: PageView,
-        meta: { title: 'hello', icon: 'dog' },
-        children: [
-          {
-            path: 'yy',
-            name: 'home',
-            component: PageView,
-            meta: { title: 'home', icon: 'dog' },
-            children: [
-              {
-                path: 'xx',
-                name: 'home',
-                component: () => import('@/pages/HelloWorld'),
-                meta: { title: 'home', icon: 'dog' }
-              }
-            ]
-          }
-        ]
+        component: () => import('@/pages/HelloWorld'),
+        meta: { title: 'hello', icon: 'dog' }
       }
     ]
   }

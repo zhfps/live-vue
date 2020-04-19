@@ -10,7 +10,7 @@
       />
     </div>
     <el-menu class="el-menu-vertical" :router="true" :collapse="isCollapse">
-      <Menu/>
+      <Menu />
     </el-menu>
   </div>
 </template>

@@ -1,11 +1,15 @@
 <template>
-  <div class="hello">
-    <svg-icon
-      name="open"
-      width="200"
-      height="200"
-    />
+  <div>
+    <div @contextmenu.stop.prevent="$refs.ctxshow.showMenu($event)">
+      鼠标右键点击
+    </div>
+    <e-vue-contextmenu id="contextStyle" ref="ctxshow">
+      <div>Sql数据操作</div>
+      <div>打开表</div>
+      <div>生成代码</div>
+    </e-vue-contextmenu>
   </div>
+
 </template>
 
 <script>
@@ -20,6 +24,11 @@ export default {
   },
   created() {
     console.log('yy')
+  },
+  methods: {
+    hideMenu() {
+      this.$refs.ctxshow.hideMenu() // 隐藏菜单
+    }
   }
 }
 </script>

@@ -9,7 +9,19 @@
       </div>
       <div class="main-content">
         <div v-if="true" class="page-tags">
-          <tags-view v-for="(item,index) in tags" :key="index" :title="item.title" :icon="item.icon" :path="item.path" @close="handleClose" />
+          <tags-view
+            v-for="(item,index) in tags"
+            :key="index"
+            :name="item.name"
+            :title="item.title"
+            :icon="item.icon"
+            :path="item.path"
+            @close="handleClose"
+            @CloseOther="handleCloseOther"
+            @CloseRight="handleCloseRight"
+            @CloseLeft="handleCloseLeft"
+            @CloseAll="handleCloseAll"
+          />
         </div>
         <div class="main">
           <div class="page">
@@ -39,10 +51,12 @@ export default {
     return {
       tags: [{
         icon: 'dog',
+        name: 'home',
         title: 'home',
         path: '/home'
       }, {
         icon: 'eye',
+        name: 'index',
         title: 'index',
         path: '/hello'
       }]
@@ -51,6 +65,18 @@ export default {
   methods: {
     handleClose(val) {
       this.tags.splice(this.tags.findIndex(item => item.title === val), 1)
+    },
+    handleCloseOther(val) {
+      console.log('Other:' + val)
+    },
+    handleCloseRight(val) {
+      console.log('Right:' + val)
+    },
+    handleCloseLeft(val) {
+      console.log('Left:' + val)
+    },
+    handleCloseAll() {
+      console.log('All')
     }
   }
 }

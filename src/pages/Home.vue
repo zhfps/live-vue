@@ -1,6 +1,7 @@
 <template>
-  <el-button @click="handleLang">{{ $t('message.key') }}</el-button>
-<!--    <div>{{icons}}</div>-->
+  <!--  <el-button @click="handleLang">{{ $t('message.key') }}</el-button>-->
+  <!--    <div>{{icons}}</div>-->
+  <div />
 </template>
 
 <script>
