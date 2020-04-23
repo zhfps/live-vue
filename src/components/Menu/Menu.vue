@@ -1,6 +1,6 @@
 <script>
 import './_Menu.scss'
-import { Test } from '@/router'
+import { mapGetters } from 'vuex'
 export default {
   name: 'Menu',
   props: {
@@ -14,6 +14,11 @@ export default {
     return {
 
     }
+  },
+  computed: {
+    ...mapGetters([
+      'menus'
+    ])
   },
   methods: {
     handleMenuItemClick(name) {
@@ -56,7 +61,7 @@ export default {
         }
       })
     }
-    const data = Test[0].children
+    const data = this.menus === undefined ? [] : this.menus
     const vNode = createElement('el-menu', {
       attrs: {
         router: true,
