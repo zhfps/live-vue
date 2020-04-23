@@ -10,7 +10,7 @@
       <div class="main-content">
         <div v-if="true" class="page-tags">
           <tags-view
-            v-for="(item,index) in tags"
+            v-for="(item,index) in visitedViews"
             :key="index"
             :name="item.name"
             :title="item.title"
@@ -40,6 +40,7 @@ import './Layout.scss'
 import ZhHeader from '@/components/header'
 import ZhAside from '@/components/aside'
 import TagsView from '@/components/TagsView/TagsView'
+import { mapGetters } from 'vuex'
 export default {
   name: 'LayOut',
   components: {
@@ -47,24 +48,18 @@ export default {
     ZhAside,
     TagsView
   },
+  computed: {
+    ...mapGetters([
+      'visitedViews'
+    ])
+  },
   data() {
     return {
-      tags: [{
-        icon: 'dog',
-        name: 'home',
-        title: 'home',
-        path: '/home'
-      }, {
-        icon: 'eye',
-        name: 'index',
-        title: 'index',
-        path: '/hello'
-      }]
     }
   },
   methods: {
     handleClose(val) {
-      this.tags.splice(this.tags.findIndex(item => item.title === val), 1)
+      // this.tags.splice(this.tags.findIndex(item => item.title === val), 1)
     },
     handleCloseOther(val) {
       console.log('Other:' + val)

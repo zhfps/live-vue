@@ -1,8 +1,25 @@
 <script>
+import './_Menu.scss'
 import { Test } from '@/router'
 export default {
   name: 'Menu',
-  functional: true,
+  props: {
+    isCollapse: {
+      type: Boolean,
+      require: true,
+      default: false
+    }
+  },
+  data() {
+    return {
+
+    }
+  },
+  methods: {
+    handleMenuItemClick(name) {
+      this.$emit('active', name)
+    }
+  },
   render(createElement) {
     const getMenus = (data, path = '/') => {
       return data.map(item => {
@@ -14,7 +31,7 @@ export default {
               slot: 'title'
             }, [
               createElement('svg-icon', {
-                attrs: { class: 'el-icon-location', color: '#DCDFE6', name: item.meta.icon }
+                attrs: { class: 'el-icon-location', color: item.meta.color, name: item.meta.icon }
               }),
               createElement('span', {
                 attrs: { slot: 'title' }
@@ -24,23 +41,28 @@ export default {
           ])
         } else {
           return createElement('el-menu-item', {
-            attrs: { index: item.path, route: path + item.path }
+            attrs: { index: item.path, route: path + item.path },
+            on: { click: () => {
+              this.handleMenuItemClick(item.name)
+            } }
           }, [
             createElement('svg-icon', {
-              attrs: { class: 'el-icon-location', color: '#DCDFE6', name: item.meta.icon }
+              attrs: { class: 'el-icon-location', color: item.meta.color, name: item.meta.icon }
             }),
             createElement('span', {
-              attrs: { slot: 'title' },
-              on: { click: () => {
-                console.log(item.name)
-              } }
+              attrs: { slot: 'title' }
             }, [item.name])
           ])
         }
       })
     }
     const data = Test[0].children
-    const vNode = getMenus(data)
+    const vNode = createElement('el-menu', {
+      attrs: {
+        router: true,
+        collapse: this.isCollapse
+      }
+    }, [getMenus(data)])
     return vNode
   }
 }

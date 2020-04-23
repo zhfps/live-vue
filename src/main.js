@@ -6,7 +6,9 @@ import router from '@/router'
 import ElementUI from 'element-ui'
 import i18n from '@/lang'
 import SvgIcon from 'vue-svgicon'
-import EVueContextmenu from 'e-vue-contextmenu'
+import contentmenu from 'v-contextmenu'
+import 'v-contextmenu/dist/index.css'
+
 import '@/router/permission'
 import '@/icons/svg/index'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -15,7 +17,7 @@ Vue.use(ElementUI)
 Vue.use(SvgIcon, {
   tagName: 'svg-icon'
 })
-Vue.use(EVueContextmenu)
+Vue.use(contentmenu)
 Vue.config.productionTip = false
 
 new Vue({

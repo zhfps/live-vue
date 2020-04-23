@@ -9,9 +9,7 @@
         @click="handleColl"
       />
     </div>
-    <el-menu class="el-menu-vertical" :router="true" :collapse="isCollapse">
-      <Menu />
-    </el-menu>
+    <Menu class="el-menu-vertical" :is-collapse="isCollapse" @active="handleActive" />
   </div>
 </template>
 
@@ -35,6 +33,9 @@ export default {
     handleColl() {
       this.isCollapse = !this.isCollapse
       this.collIcon === 'open' ? (this.collIcon = 'close') : (this.collIcon = 'open')
+    },
+    handleActive(name) {
+      console.log(name)
     }
   }
 }

@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="tag-view" @contextmenu.stop.prevent="$refs.ctxshow.showMenu($event)">
+    <div class="tag-view" v-contextmenu:contextmenu>
       <router-link class="link" :to="path" @click.native="handleClick">
         <svg-icon
           class="pre-icon"
           :name="icon"
           width="18"
           height="18"
-          :color="activeColor"
+          :color="color"
         />
         <span class="title"> {{ title }}</span>
       </router-link>
@@ -20,14 +20,13 @@
         @click.stop="handleClose(name)"
       />
     </div>
-    <e-vue-contextmenu id="contextStyle" ref="ctxshow" class="contextmenu">
-      <div class="menu-item" @click.stop="handleClose(name)">关闭当前标签</div>
-      <div class="menu-item" @click.stop="handleCloseOther(name)">关闭其它标签</div>
-      <div class="menu-item" @click.stop="handleCloseRight(name)">关闭右边标签</div>
-      <div class="menu-item" @click.stop="handleCloseLeft(name)">关闭左边标签</div>
-      <div class="menu-item" @click.stop="handleCloseAll()">关闭所有标签</div>
-      <div class="tag-view" @contextmenu.prevent="handleOnMousedown" />
-    </e-vue-contextmenu>
+    <v-contextmenu ref="contextmenu" class="contextmenu">
+      <v-contextmenu-item class="menu-item" @click.stop="handleClose(name)">关闭当前标签</v-contextmenu-item>
+      <v-contextmenu-item class="menu-item" @click.stop="handleCloseOther(name)">关闭其它标签</v-contextmenu-item>
+      <v-contextmenu-item class="menu-item" @click.stop="handleCloseRight(name)">关闭右边标签</v-contextmenu-item>
+      <v-contextmenu-item class="menu-item" @click.stop="handleCloseLeft(name)">关闭左边标签</v-contextmenu-item>
+      <v-contextmenu-item class="menu-item" @click.stop="handleCloseAll()">关闭所有标签</v-contextmenu-item>
+    </v-contextmenu>
   </div>
 </template>
 
@@ -54,36 +53,22 @@ export default {
       type: String,
       require: true,
       default: 'index'
+    },
+    color: {
+      type: String,
+      default: '#eee'
     }
   },
   data() {
     return {
-      contextmenu: false,
-      activeColor: '#409EFF',
-      color: '#eee'
-    }
-  },
-  watch: {
-    contextmenu(value) {
-      if (value) {
-        document.body.addEventListener('click', this.closeMenu)
-      } else {
-        document.body.removeEventListener('click', this.closeMenu)
-      }
     }
   },
   methods: {
-    closeMenu() {
-      this.contextmenu = false
-    },
     handleClose(val) {
       this.$emit('close', val)
     },
     handleClick(path) {
       this.$emit('link', path)
-    },
-    handleOnMousedown(event) {
-      this.contextmenu = true
     },
     handleCloseOther(name) {
       this.$emit('CloseOther', name)

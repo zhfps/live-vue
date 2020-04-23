@@ -4,10 +4,6 @@ $color: #409EFF;
    align-items: center;
    height: 24px;
    padding: 0 10px 0 0;
-   //border-radius: 10px;
-   //border-top:1px solid #eee;
-   //border-right:1px solid #eee;
-   //border-left:1px solid #eee;
 }
 .link{
    display: flex;
@@ -63,4 +59,8 @@ $color: #409EFF;
    font-weight: 400;
    color: #333;
    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .3);
+}
+.icon{
+   background-color: #CCEEFF;
+   border-radius: 15px;
 }

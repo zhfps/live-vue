@@ -8,7 +8,9 @@ const mutations = {
     if (state.visitedViews.some(v => v.path === view.path)) return
     state.visitedViews.push(
       Object.assign({}, view, {
-        title: view.meta.title || 'no-name'
+        title: view.meta.title || 'no-name',
+        icon: view.meta.icon || 'dog',
+        color: '#eee'
       })
     )
   },
@@ -76,7 +78,7 @@ const actions = {
     dispatch('addCachedView', view)
   },
   addVisitedView({ commit }, view) {
-    // commit('ADD_VISITED_VIEW', view)
+    commit('ADD_VISITED_VIEW', view)
   },
   addCachedView({ commit }, view) {
     // commit('ADD_CACHED_VIEW', view)

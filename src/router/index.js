@@ -13,12 +13,12 @@ export const Test = [
         path: 'home',
         name: 'home',
         component: () => import('@/pages/Home'),
-        meta: { title: 'home', icon: 'dog' }
+        meta: { title: 'home', icon: 'dog', color: '#eee' }
       }, {
         path: 'hello',
         name: 'hello',
         component: () => import('@/pages/HelloWorld'),
-        meta: { title: 'hello', icon: 'dog' }
+        meta: { title: 'hello', icon: 'dog', color: '#eee' }
       }
     ]
   }

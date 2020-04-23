@@ -21,7 +21,7 @@ export default {
     ])
   },
   created() {
-    console.log(this.visitedViews)
+    // console.log(this.visitedViews)
   },
   methods: {
     ...mapActions({
@@ -35,7 +35,7 @@ export default {
     handleTestApi() {
       new Promise((resolve, reject) => {
         test().then(res => {
-          console.log(res)
+          // console.log(res)
           resolve(res)
         })
       })
