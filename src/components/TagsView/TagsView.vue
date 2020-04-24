@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="tag-view" v-contextmenu:contextmenu>
-      <router-link class="link" :to="path" @click.native="handleClick">
+      <router-link class="link" :to="path" @click.native="handleClick(name)">
         <svg-icon
           class="pre-icon"
           :name="icon"
@@ -67,8 +67,8 @@ export default {
     handleClose(val) {
       this.$emit('close', val)
     },
-    handleClick(path) {
-      this.$emit('link', path)
+    handleClick(name) {
+      this.$emit('link', name)
     },
     handleCloseOther(name) {
       this.$emit('CloseOther', name)

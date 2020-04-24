@@ -16,7 +16,7 @@
 <script>
 import './main.scss'
 import Menu from '@/components/Menu/Menu'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'ZhAside',
   components: {
@@ -35,26 +35,15 @@ export default {
     ])
   },
   methods: {
+    ...mapActions({
+      isActive: 'sideMenu/changActiveIcon'
+    }),
     handleColl() {
       this.isCollapse = !this.isCollapse
       this.collIcon === 'open' ? (this.collIcon = 'close') : (this.collIcon = 'open')
     },
     handleActive(name) {
-      console.log(this.findMenuItem(this.menus, name))
-    },
-    findMenuItem(data, name) {
-      let Item = {}
-      data.forEach(item => {
-        if (item.children && (item.children).length > 0) {
-          Item = this.findMenuItem(item.children, name)
-        } else {
-          if (item.name === name) {
-            Item = item
-            return false
-          }
-        }
-      })
-      return Item
+      this.isActive(name)
     }
   }
 }

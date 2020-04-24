@@ -16,6 +16,8 @@
             :title="item.title"
             :icon="item.icon"
             :path="item.path"
+            :color="item.color"
+            @link="handleIsActive"
             @close="handleClose"
             @CloseOther="handleCloseOther"
             @CloseRight="handleCloseRight"
@@ -40,7 +42,7 @@ import './Layout.scss'
 import ZhHeader from '@/components/header'
 import ZhAside from '@/components/aside'
 import TagsView from '@/components/TagsView/TagsView'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'LayOut',
   components: {
@@ -58,6 +60,12 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      isActive: 'tagsView/isActive'
+    }),
+    handleIsActive(name) {
+      this.isActive(name)
+    },
     handleClose(val) {
       // this.tags.splice(this.tags.findIndex(item => item.title === val), 1)
     },

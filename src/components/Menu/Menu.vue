@@ -1,6 +1,6 @@
 <script>
 import './_Menu.scss'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Menu',
   props: {
@@ -21,6 +21,9 @@ export default {
     ])
   },
   methods: {
+    ...mapActions({
+      addView: 'tagsView/addView'
+    }),
     handleMenuItemClick(name) {
       this.$emit('active', name)
     }
@@ -49,6 +52,7 @@ export default {
             attrs: { index: item.path, route: path + item.path },
             on: { click: () => {
               this.handleMenuItemClick(item.name)
+              this.addView(item)
             } }
           }, [
             createElement('svg-icon', {

@@ -4,15 +4,38 @@ const state = {
 }
 
 const mutations = {
+  IS_ACTIVE: (state, name) => {
+    state.visitedViews.map(item => {
+      if (item.name === name) {
+        item.color = '#409EFF'
+      } else {
+        item.color = '#eee'
+      }
+    })
+  },
   ADD_VISITED_VIEW: (state, view) => {
+    state.visitedViews.map(item => {
+      if (item.name === view.name) {
+        item.color = '#409EFF'
+      } else {
+        item.color = '#eee'
+      }
+    })
+    const item = {
+      path: view.path,
+      name: view.name,
+      title: view.meta.title || 'no-name',
+      icon: view.meta.icon || 'dog',
+      color: '#409EFF'
+    }
+    const length = state.visitedViews.length
     if (state.visitedViews.some(v => v.path === view.path)) return
-    state.visitedViews.push(
-      Object.assign({}, view, {
-        title: view.meta.title || 'no-name',
-        icon: view.meta.icon || 'dog',
-        color: '#eee'
-      })
-    )
+    // 最多存储六个页面
+    if (length > 6) {
+      state.visitedViews.splice(0, 1, item)
+    } else {
+      state.visitedViews.push(item)
+    }
   },
   ADD_CACHED_VIEW: (state, view) => {
     if (state.cachedViews.includes(view.name)) return
@@ -73,6 +96,9 @@ const mutations = {
 }
 
 const actions = {
+  isActive({ commit }, name) {
+    commit('IS_ACTIVE', name)
+  },
   addView({ dispatch }, view) {
     dispatch('addVisitedView', view)
     dispatch('addCachedView', view)
@@ -81,7 +107,7 @@ const actions = {
     commit('ADD_VISITED_VIEW', view)
   },
   addCachedView({ commit }, view) {
-    // commit('ADD_CACHED_VIEW', view)
+    commit('ADD_CACHED_VIEW', view)
   },
 
   delView({ dispatch, state }, view) {

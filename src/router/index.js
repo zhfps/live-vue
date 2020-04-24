@@ -14,7 +14,7 @@ export const Test = [
         path: 'home',
         name: 'home',
         component: () => import('@/pages/Home'),
-        meta: { title: 'home', icon: 'dog', color: '#eee' }
+        meta: { title: 'home', icon: 'dog', color: '#409EFF' }
       }, {
         path: 'hello',
         name: 'hello',
@@ -33,6 +33,17 @@ export const Test = [
             meta: { title: 'hello', icon: 'dog', color: '#eee' }
           }
         ]
+      },
+      {
+        path: 'hello',
+        name: 'cc',
+        component: () => import('@/pages/Home'),
+        meta: { title: 'home', icon: 'dog', color: '#eee' }
+      }, {
+        path: 'test',
+        name: 'Test',
+        component: () => import('@/pages/Test'),
+        meta: { title: 'test', icon: 'dog', color: '#eee' }
       }
     ]
   }
