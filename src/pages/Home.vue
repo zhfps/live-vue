@@ -1,13 +1,11 @@
 <template>
-  <!--  <el-button @click="handleLang">{{ $t('message.key') }}</el-button>-->
-  <!--    <div>{{icons}}</div>-->
-  <div />
+    <el-button @click="handleLang">{{ $t('message.key') }}</el-button>
 </template>
 
 <script>
 import { test } from '@/api/module/Test'
 // import icons from '@/icons'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   name: 'Home',
   data() {
@@ -24,13 +22,9 @@ export default {
     // console.log(this.visitedViews)
   },
   methods: {
-    ...mapActions({
-      addView: 'tagsView/addView'
-    }),
     handleLang() {
       // this.$i18n.locale = 'en'
       // this.handleTestApi()
-      this.addView('xx')
     },
     handleTestApi() {
       new Promise((resolve, reject) => {

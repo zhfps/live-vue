@@ -10,6 +10,13 @@
       <div class="main-content">
         <div v-if="true" class="page-tags">
           <tags-view
+            name="home"
+            title="home"
+            icon="home"
+            path="/"
+            color="#eee"
+          />
+          <tags-view
             v-for="(item,index) in visitedViews"
             :key="index"
             :name="item.name"
@@ -31,7 +38,6 @@
           </div>
           <div class="footer">footer</div>
         </div>
-
       </div>
     </div>
   </div>
@@ -72,6 +78,11 @@ export default {
       this.isActive(name)
     },
     handleClose(val) {
+      if ((this.visitedViews).length > 1) {
+        this.$router.back()
+      } else {
+        this.$router.push('/')
+      }
       this.delView(val)
     },
     handleCloseOther(val) {
@@ -85,6 +96,7 @@ export default {
     },
     handleCloseAll() {
       this.delAllViews()
+      this.$router.push('/')
     }
   }
 }
