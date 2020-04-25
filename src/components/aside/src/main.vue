@@ -1,6 +1,6 @@
 <template>
   <div class="zh-aside">
-    <div class="switch">
+    <div :class="switchClass">
       <svg-icon
         :name="collIcon"
         width="18px"
@@ -26,7 +26,8 @@ export default {
     return {
       isCollapse: true,
       collIcon: 'open',
-      index: 1
+      index: 1,
+      switchClass: 'switch'
     }
   },
   computed: {
@@ -41,6 +42,7 @@ export default {
     handleColl() {
       this.isCollapse = !this.isCollapse
       this.collIcon === 'open' ? (this.collIcon = 'close') : (this.collIcon = 'open')
+      this.switchClass === 'switch' ? (this.switchClass = 'switch-active') : (this.switchClass = 'switch')
     },
     handleActive(name) {
       this.isActive(name)

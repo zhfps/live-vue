@@ -16,16 +16,16 @@
         name="pageclose"
         width="18"
         height="18"
-        color="#409EFF"
+        color="#000"
         @click.stop="handleClose(name)"
       />
     </div>
     <v-contextmenu ref="contextmenu" class="contextmenu">
-      <v-contextmenu-item class="menu-item" @click.stop="handleClose(name)">关闭当前标签</v-contextmenu-item>
-      <v-contextmenu-item class="menu-item" @click.stop="handleCloseOther(name)">关闭其它标签</v-contextmenu-item>
-      <v-contextmenu-item class="menu-item" @click.stop="handleCloseRight(name)">关闭右边标签</v-contextmenu-item>
-      <v-contextmenu-item class="menu-item" @click.stop="handleCloseLeft(name)">关闭左边标签</v-contextmenu-item>
-      <v-contextmenu-item class="menu-item" @click.stop="handleCloseAll()">关闭所有标签</v-contextmenu-item>
+      <v-contextmenu-item class="menu-item" @click="handleClose(name)">关闭当前标签</v-contextmenu-item>
+      <v-contextmenu-item class="menu-item" @click="handleCloseOther(name)">关闭其它标签</v-contextmenu-item>
+      <v-contextmenu-item class="menu-item" @click="handleCloseRight(name)">关闭右边标签</v-contextmenu-item>
+      <v-contextmenu-item class="menu-item" @click="handleCloseLeft(name)">关闭左边标签</v-contextmenu-item>
+      <v-contextmenu-item class="menu-item" @click="handleCloseAll()">关闭所有标签</v-contextmenu-item>
     </v-contextmenu>
   </div>
 </template>
@@ -71,16 +71,16 @@ export default {
       this.$emit('link', name)
     },
     handleCloseOther(name) {
-      this.$emit('CloseOther', name)
+      this.$emit('closeOther', name)
     },
     handleCloseRight(name) {
-      this.$emit('CloseRight', name)
+      this.$emit('closeRight', name)
     },
     handleCloseLeft(name) {
-      this.$emit('CloseLeft', name)
+      this.$emit('closeLeft', name)
     },
     handleCloseAll() {
-      this.$emit('CloseAll')
+      this.$emit('closeAll')
     }
   }
 }

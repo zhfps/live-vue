@@ -1,8 +1,9 @@
 <template>
   <div class="zh-header">
     <div class="logo">
-      <span class="logo-text">It_dog</span>
+      <span class="logo-text">LOGO</span>
       <svg-icon
+        clss="icon"
         name="dog"
         width="45"
         height="45"

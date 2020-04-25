@@ -4,24 +4,58 @@ $color: #409EFF;
    align-items: center;
    height: 24px;
    padding: 0 10px 0 0;
-}
-.link{
-   display: flex;
-   align-items: center;
-   height: 24px;
-   text-decoration: none;
-}
-.title{
-   display: inline-block;
-   height: 24px;
-   line-height: 24px;
-   font-size: 16px;
-   margin-right: 5px;
-   min-width: 40px;
-   padding-left: 5px;
-}
-.pre-icon{
-  padding-left: 5px;
+   .link{
+      display: flex;
+      align-items: center;
+      height: 24px;
+      text-decoration: none;
+      .pre-icon{
+         padding-left: 5px;
+      }
+      .title{
+         display: inline-block;
+         height: 24px;
+         line-height: 24px;
+         font-size: 16px;
+         margin-right: 5px;
+         min-width: 40px;
+         padding-left: 5px;
+      }
+   }
+   .router-link-active{
+      text-decoration: none;
+      color:#409EFF;
+      background-color: rgba(64,158,255,0.1);
+   }
+   .icon{
+      //background-color: #CCEEFF;
+      //border-radius: 15px;
+   }
+   .contextmenu{
+      margin: 0;
+      background: #fff;
+      z-index: 3000;
+      position: absolute;
+      list-style-type: none;
+      padding: 5px 0;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 400;
+      color: #333;
+      box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .3);
+      .menu-item{
+         font-size: 14px;
+         min-width: 105px;
+         color: #303133;
+         padding: 5px 20px;
+         cursor: pointer;
+         transition: border-color .3s,background-color .3s,color .3s;
+         box-sizing: border-box;
+      }
+      .menu-item:hover{
+         background-color: #409EFF;
+      }
+   }
 }
 .tag-view-active{
    display: flex;
@@ -30,37 +64,7 @@ $color: #409EFF;
    padding: 0 10px 0 0;
    background-color: rgba(64,158,255,0.1);
 }
-.router-link-active{
-   text-decoration: none;
-   color:#409EFF;
-   background-color: rgba(64,158,255,0.1);
-}
-.menu-item{
-   font-size: 14px;
-   min-width: 105px;
-   color: #303133;
-   padding: 5px 20px;
-   cursor: pointer;
-   transition: border-color .3s,background-color .3s,color .3s;
-   box-sizing: border-box;
-}
-.menu-item:hover{
-   background-color: #409EFF;
-}
-.contextmenu{
-   margin: 0;
-   background: #fff;
-   z-index: 3000;
-   position: absolute;
-   list-style-type: none;
-   padding: 5px 0;
-   border-radius: 4px;
-   font-size: 12px;
-   font-weight: 400;
-   color: #333;
-   box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .3);
-}
-.icon{
-   background-color: #CCEEFF;
-   border-radius: 15px;
-}
+
+
+
+

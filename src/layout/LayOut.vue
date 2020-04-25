@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="layout">
     <div class="header">
       <zh-header />
     </div>
@@ -19,10 +19,10 @@
             :color="item.color"
             @link="handleIsActive"
             @close="handleClose"
-            @CloseOther="handleCloseOther"
-            @CloseRight="handleCloseRight"
-            @CloseLeft="handleCloseLeft"
-            @CloseAll="handleCloseAll"
+            @closeOther="handleCloseOther"
+            @closeRight="handleCloseRight"
+            @closeLeft="handleCloseLeft"
+            @closeAll="handleCloseAll"
           />
         </div>
         <div class="main">
@@ -61,25 +61,30 @@ export default {
   },
   methods: {
     ...mapActions({
-      isActive: 'tagsView/isActive'
+      isActive: 'tagsView/isActive',
+      delView: 'tagsView/delView',
+      delOthersViews: 'tagsView/delOthersViews',
+      delAllViews: 'tagsView/delAllViews',
+      delLeftView: 'tagsView/delLeftView',
+      delRightView: 'tagsView/delRightView'
     }),
     handleIsActive(name) {
       this.isActive(name)
     },
     handleClose(val) {
-      // this.tags.splice(this.tags.findIndex(item => item.title === val), 1)
+      this.delView(val)
     },
     handleCloseOther(val) {
-      console.log('Other:' + val)
+      this.delOthersViews(val)
     },
     handleCloseRight(val) {
-      console.log('Right:' + val)
+      this.delRightView(val)
     },
     handleCloseLeft(val) {
-      console.log('Left:' + val)
+      this.delLeftView(val)
     },
     handleCloseAll() {
-      console.log('All')
+      this.delAllViews()
     }
   }
 }
