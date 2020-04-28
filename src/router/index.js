@@ -46,6 +46,12 @@ export const Test = [
         meta: { title: 'test', icon: 'dog', color: '#eee' }
       }
     ]
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/pages/Login/Login'),
+    meta: { title: 'home', icon: 'dog', color: '#eee' }
   }
 ]
 const router = new VueRouter({
