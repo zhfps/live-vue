@@ -5,7 +5,7 @@
       <div class="logo" />
       <el-form ref="ruleForm" :model="login" status-icon :rules="rules">
         <el-form-item class="form-item" prop="userName">
-          <el-input v-model="login.userName" type="password" placeholder="请输入用户名" autocomplete="off">
+          <el-input v-model="login.userName" type="txt" placeholder="请输入用户名" autocomplete="off">
             <svg-icon
               slot="prefix"
               class="icon"
@@ -29,17 +29,24 @@
             />
           </el-input>
         </el-form-item>
-        <el-form-item class="form-item" prop="code">
-          <el-input v-model="login.code" placeholder="请输入验证码" >
-            <svg-icon
-                    slot="prefix"
-                    class="icon"
-                    name="dentifying_code"
-                    width="18"
-                    height="25"
-                    color="#000"
-            />
-          </el-input>
+        <el-form-item class="form-item-code" prop="code">
+          <el-row :gutter="20">
+            <el-col :span="12">
+              <el-input v-model="login.code" class="code" placeholder="请输入验证码">
+                <svg-icon
+                  slot="prefix"
+                  class="icon"
+                  name="dentifying_code"
+                  width="18"
+                  height="25"
+                  color="#000"
+                />
+              </el-input>
+            </el-col>
+            <el-col :span="12">
+              <el-image class="code-image" />
+            </el-col>
+          </el-row>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" class="submit" @click="submitForm('ruleForm')">提交</el-button>
@@ -55,6 +62,7 @@
 
 <script>
 import './_Login.scss'
+import { mapActions } from 'vuex'
 export default {
   data() {
     var checkCode = (rule, value, callback) => {
@@ -97,10 +105,18 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      setUser: 'userInfo/setUserInfo'
+    }),
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // 登录处理
+          this.setUser(this.login).then(res => {
+            if (res) {
+              this.$router.push('/')
+            }
+          })
         } else {
           this.resetForm(formName)
           return false
