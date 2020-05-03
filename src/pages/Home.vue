@@ -1,5 +1,5 @@
 <template>
-  <el-button @click="handleLang">{{ $t('message.key') }}</el-button>
+  <el-button v-drag style="margin: 60px;" @click="handleLang">{{ $t('message.key') }}</el-button>
 </template>
 
 <script>
