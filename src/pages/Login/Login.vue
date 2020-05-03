@@ -114,8 +114,12 @@ export default {
           // 登录处理
           this.setUser(this.login).then(res => {
             if (res) {
-              this.$router.push('/')
+              this.$router.push({ path: this.redirect || '/' }).catch(err => {
+                console.log(err)
+              })
             }
+          }).catch(err => {
+            console.log(err)
           })
         } else {
           this.resetForm(formName)

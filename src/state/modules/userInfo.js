@@ -1,17 +1,18 @@
 
 const state = {
-  user: {}
+  custom: {}
 }
 const mutations = {
   SET_USER_INFO: (sate, user) => {
-    state.user = Object.assign({}, user)
+    state.custom = Object.assign({}, user)
   }
 }
 const actions = {
   setUserInfo({ commit }, user) {
     return new Promise((resolve, reject) => {
       commit('SET_USER_INFO', user)
-      resolve(state.user)
+      resolve(state.custom)
+      reject(state.custom)
     })
   }
 }

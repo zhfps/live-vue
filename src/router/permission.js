@@ -4,24 +4,23 @@ import 'nprogress/nprogress.css'
 import state from '@/state'
 import _ from 'lodash'
 NProgress.configure({ showSpinner: false })
-
-const whiteList = ['/login', '/404']
-const user = state.getters.user
+const custom = state.getters.custom
 // 路由守卫
 router.beforeEach(async(to, from, next) => {
   NProgress.start()
-  // set page title
-  document.title = 'vue/' + to.meta.title
-  const path = _.find(whiteList, function(item) {
-    item === to.path
-  })
-  if (path) {
+  if (to.path === '/login' || to.path === '/404') {
+    document.title = 'vue'
     next()
+    NProgress.done()
   } else {
-    if (user) {
-      next()
+    if (!_.isEmpty(custom)) {
+      document.title = 'vue/login'
+      next('/login')
+      NProgress.done()
     } else {
-      next({ path: '/' })
+      next()
+      document.title = to.name
+      NProgress.done()
     }
   }
 })
