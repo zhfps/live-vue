@@ -1,7 +1,7 @@
-import { Test } from '@/router'
+import { sideMenu } from '@/model/sideMenu'
 import { findMenuItem } from '@/plugin'
 
-const data = Test[0].children
+const data = sideMenu
 const state = {
   menus: data
 }
