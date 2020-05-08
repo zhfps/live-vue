@@ -6,27 +6,27 @@ const sideMenu = [
   }, {
     path: 'hello',
     name: 'hello',
-    meta: { title: 'hello', icon: 'dog', color: '#eee' },
+    meta: { title: 'hello', icon: 'dog', color: '#000' },
     children: [
       {
         path: 'home',
         name: 'xx',
-        meta: { title: 'home', icon: 'dog', color: '#eee' }
+        meta: { title: 'home', icon: 'dog', color: '#000' }
       }, {
         path: 'hello',
         name: 'zz',
-        meta: { title: 'hello', icon: 'dog', color: '#eee' }
+        meta: { title: 'hello', icon: 'dog', color: '#000' }
       }
     ]
   },
   {
     path: 'hello',
     name: 'cc',
-    meta: { title: 'home', icon: 'dog', color: '#eee' }
+    meta: { title: 'home', icon: 'dog', color: '#000' }
   }, {
     path: 'test',
     name: 'Test',
-    meta: { title: 'test', icon: 'dog', color: '#eee' }
+    meta: { title: 'test', icon: 'dog', color: '#000' }
   }
 ]
 export {

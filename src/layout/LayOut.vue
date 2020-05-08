@@ -11,7 +11,7 @@
         <div v-if="true" class="page-tags">
           <tags-view
             name="home"
-            title="home"
+            title="首页"
             icon="home"
             path="/"
             color="#eee"

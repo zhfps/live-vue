@@ -4,7 +4,6 @@ import 'nprogress/nprogress.css'
 import state from '@/state'
 import _ from 'lodash'
 NProgress.configure({ showSpinner: false })
-const custom = state.getters.custom
 // 路由守卫
 router.beforeEach(async(to, from, next) => {
   NProgress.start()
@@ -13,7 +12,8 @@ router.beforeEach(async(to, from, next) => {
     next()
     NProgress.done()
   } else {
-    if (!_.isEmpty(custom)) {
+    const custom = state.getters.custom
+    if (_.isEmpty(custom)) {
       document.title = 'vue/login'
       next('/login')
       NProgress.done()

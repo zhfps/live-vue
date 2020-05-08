@@ -87,9 +87,9 @@ export default {
     }
     return {
       login: {
-        userName: '',
-        passWord: '',
-        code: ''
+        userName: 'admin',
+        passWord: 'admin',
+        code: '2651'
       },
       rules: {
         userName: [

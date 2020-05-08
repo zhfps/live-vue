@@ -25,11 +25,11 @@ $color: #409EFF;
    .router-link-active{
       text-decoration: none;
       color:#409EFF;
-      background-color: rgba(64,158,255,0.1);
+      //background-color: rgba(64,158,255,0.1);
    }
-   .icon{
-      //background-color: #CCEEFF;
-      //border-radius: 15px;
+   .icon:hover{
+      border-radius: 15px;
+      background-color: rgba(64,158,255,0.1);
    }
    .contextmenu{
       margin: 0;

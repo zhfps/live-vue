@@ -9,7 +9,7 @@ const mutations = {
       if (item.name === name) {
         item.color = '#409EFF'
       } else {
-        item.color = '#eee'
+        item.color = '#000'
       }
     })
   },
@@ -18,7 +18,7 @@ const mutations = {
       if (item.name === view.name) {
         item.color = '#409EFF'
       } else {
-        item.color = '#eee'
+        item.color = '#000'
       }
     })
     const item = {

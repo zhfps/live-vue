@@ -16,7 +16,7 @@
         name="pageclose"
         width="18"
         height="18"
-        color="#000"
+        :color="color"
         @click.stop="handleClose(name)"
       />
     </div>

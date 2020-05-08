@@ -60,7 +60,7 @@ export default {
             }),
             createElement('span', {
               attrs: { slot: 'title' }
-            }, [item.name])
+            }, [item.meta.title])
           ])
         }
       })
