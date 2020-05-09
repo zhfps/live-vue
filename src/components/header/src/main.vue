@@ -10,17 +10,22 @@
         color="#42b983 #35495e"
       />
     </div>
-
+    <div class="nav">
+      <div class="nav-item">
+        <UserInfo/>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import './main.scss'
+import UserInfo from '@/components/UserInfo/UserInfo'
 export default {
   name: 'ZhHeader',
-
-  componentName: 'Header',
-
+  components: {
+    UserInfo
+  },
   props: {
     height: {
       type: String,
