@@ -13,7 +13,7 @@
             name="home"
             title="首页"
             icon="home"
-            path="/"
+            path="/home"
             color="#eee"
           />
           <tags-view

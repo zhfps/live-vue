@@ -27,6 +27,11 @@ const sideMenu = [
     path: 'test',
     name: 'Test',
     meta: { title: 'test', icon: 'dog', color: '#000' }
+  },
+  {
+    path: '404',
+    name: '404',
+    meta: { title: '404', icon: 'dog', color: '#000' }
   }
 ]
 export {

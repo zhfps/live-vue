@@ -36,6 +36,10 @@ export const routes = [
         name: 'Test',
         component: () => import('@/pages/Test'),
         meta: { title: 'test', icon: 'dog', color: '#eee' }
+      }, {
+        path: '*',
+        name: '404',
+        component: () => import('@/pages/NotFound/NotFound')
       }
     ]
   },
