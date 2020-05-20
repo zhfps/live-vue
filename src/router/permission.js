@@ -19,7 +19,7 @@ router.beforeEach(async(to, from, next) => {
       NProgress.done()
     } else {
       next()
-      document.title = to.name
+      document.title = to.meta.title === undefined ? '首页' : to.meta.title
       NProgress.done()
     }
   }

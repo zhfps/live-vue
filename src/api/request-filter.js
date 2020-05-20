@@ -1,5 +1,14 @@
 import axios from 'axios'
-import { Notification } from 'element-ui'
+import { Loading, Notification } from 'element-ui'
+let loading
+const startLoading = () => {
+  loading = Loading.service({
+    lock: true,
+    text: '正在加载数据',
+    spinner: 'el-icon-loading',
+    background: '#2d3a4b'
+  })
+}
 // create an axios instance
 const service = axios.create({
   baseURL: '/api', // url = base url + request url
@@ -9,6 +18,7 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
+    startLoading()
     return config
   },
   error => {
@@ -20,6 +30,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     // data 是 axios 返回数据中的 data
+    loading.close()
     const { code, data } = response.data
     // 根据 code 进行判断
     if (code === 200) {
@@ -35,6 +46,7 @@ service.interceptors.response.use(
     }
   },
   error => {
+    loading.close()
     Notification({
       message: '未知错误，请联系管理员',
       type: 'error',

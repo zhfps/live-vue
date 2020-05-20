@@ -16,10 +16,10 @@ export const routes = [
         meta: { title: '首页', icon: 'dog', color: '#409EFF' }
       },
       {
-        path: 'hello/home',
-        name: 'xx',
-        component: () => import('@/pages/Home'),
-        meta: { title: 'home', icon: 'dog', color: '#eee' }
+        path: 'menu',
+        name: 'Menu',
+        component: () => import('@/pages/common/MenuPage/MenuPage'),
+        meta: { title: '菜单管理', icon: 'dog', color: '#eee' }
       }, {
         path: 'hello/hello',
         name: 'zz',

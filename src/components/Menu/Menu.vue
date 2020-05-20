@@ -43,9 +43,9 @@ export default {
               }),
               createElement('span', {
                 attrs: { slot: 'title' }
-              }, [item.name])
+              }, [item.meta.title])
             ]),
-            getMenus(item.children, path + item.path + '/')
+            getMenus(item.children, path)
           ])
         } else {
           return createElement('el-menu-item', {
