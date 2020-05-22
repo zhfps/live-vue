@@ -133,7 +133,7 @@ export default {
       if (status) {
         this.marginLeft = '80px'
         this.tagsLeft = '63px'
-        this.width = '96%'
+        this.width = '90%'
       } else {
         this.marginLeft = '200px'
         this.tagsLeft = '200px'

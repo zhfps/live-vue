@@ -39,8 +39,10 @@
   }
   .main-content{
     z-index: 1000;
+    overflow: hidden;
     .wrapper{
       display: inline-block;
+      overflow: hidden;
       margin-top:74px;
       padding-left: 15px;
       padding-right: 15px;
