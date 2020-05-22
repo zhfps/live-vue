@@ -43,6 +43,10 @@ export default {
       this.isCollapse = !this.isCollapse
       this.collIcon === 'open' ? (this.collIcon = 'close') : (this.collIcon = 'open')
       this.switchClass === 'switch' ? (this.switchClass = 'switch-active') : (this.switchClass = 'switch')
+      this.handleIsCollapse()
+    },
+    handleIsCollapse() {
+      this.$emit('isCollapse', this.isCollapse)
     },
     handleActive(name) {
       this.isActive(name)
