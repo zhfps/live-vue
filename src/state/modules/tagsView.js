@@ -1,6 +1,24 @@
+import { routes } from '@/router'
+const router = routes[0].children
+function getNowViews() {
+  const tags = []
+  const path = window.location.href.split('/').pop()
+  const item = router.findIndex(value => value.path === path)
+  if (item > -1) {
+    const tag = {
+      path: router[item].path,
+      name: router[item].name,
+      title: router[item].meta.title || 'no-name',
+      icon: router[item].meta.icon || 'dog',
+      color: '#409EFF'
+    }
+    tags.push(tag)
+  }
+  return tags
+}
 const state = {
-  visitedViews: [],
-  cachedViews: []
+  visitedViews: getNowViews(),
+  cachedViews: getNowViews()
 }
 
 const mutations = {

@@ -12,6 +12,7 @@ import 'v-contextmenu/dist/index.css'
 
 import '@/router/permission'
 import '@/icons/svg/index'
+import '@/directive/drag'
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(VueRouter)
 Vue.use(ElementUI)

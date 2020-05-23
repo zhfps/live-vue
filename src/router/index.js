@@ -20,28 +20,13 @@ export const routes = [
         name: 'Menu',
         component: () => import('@/pages/common/MenuPage/MenuPage'),
         meta: { title: '菜单管理', icon: 'dog', color: '#eee' }
-      }, {
-        path: 'hello/hello',
-        name: 'zz',
-        component: () => import('@/pages/HelloWorld'),
-        meta: { title: 'hello', icon: 'dog', color: '#eee' }
-      },
-      {
-        path: 'hello',
-        name: 'cc',
-        component: () => import('@/pages/Home'),
-        meta: { title: 'home', icon: 'dog', color: '#eee' }
-      }, {
-        path: 'test',
-        name: 'Test',
-        component: () => import('@/pages/Test'),
-        meta: { title: 'test', icon: 'dog', color: '#eee' }
-      }, {
-        path: '*',
-        name: '404',
-        component: () => import('@/pages/NotFound/NotFound')
       }
     ]
+  },
+  {
+    path: '*',
+    name: '404',
+    component: () => import('@/pages/NotFound/NotFound')
   },
   {
     path: '/login',
@@ -51,6 +36,7 @@ export const routes = [
   }
 ]
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 export default router

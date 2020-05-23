@@ -55,12 +55,13 @@
     height: 14px;
     line-height: 14px;
     position: fixed;
+    z-index: 1009;
     bottom: -10px;
     width: 100%;
     color: #fff;
     padding: 15px 0;
     .text-center{
-     margin-left: 55%;
+     text-align: center;
     }
   }
 }

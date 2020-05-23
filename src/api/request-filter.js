@@ -6,7 +6,7 @@ const startLoading = () => {
     lock: true,
     text: '正在加载数据',
     spinner: 'el-icon-loading',
-    background: '#2d3a4b'
+    background: 'rgba(45,58,75,0.5)'
   })
 }
 // create an axios instance
