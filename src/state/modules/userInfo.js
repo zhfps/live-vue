@@ -1,29 +1,35 @@
-function getCustom() {
-  const custom = localStorage.getItem('user')
-  if (custom !== undefined) {
-    return JSON.parse(custom)
+import { login } from '@/api/module/user'
+
+function getAccessToken() {
+  const Access_Token = localStorage.getItem('Access_Token')
+  if (Access_Token !== undefined) {
+    return Access_Token
   } else {
-    return {}
+    return null
   }
 }
-function setCustom(user) {
-  localStorage.setItem('user', JSON.stringify(user))
+function setAccessToken(token) {
+  localStorage.setItem('Access_Token', token)
 }
 const state = {
-  custom: getCustom()
+  Access_Token: getAccessToken()
 }
 const mutations = {
   SET_USER_INFO: (sate, user) => {
     state.custom = Object.assign({}, user)
+  },
+  SET_ACCESS_TOKEN: (state, token) => {
+    state.Access_Token = token
   }
 }
 const actions = {
   setUserInfo({ commit }, user) {
     return new Promise((resolve, reject) => {
-      setCustom(user)
-      commit('SET_USER_INFO', user)
-      resolve(state.custom)
-      reject(state.custom)
+      login(user).then(res => {
+        setAccessToken(res)
+        commit('SET_ACCESS_TOKEN', res)
+        resolve(res)
+      })
     })
   }
 }

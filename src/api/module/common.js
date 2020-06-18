@@ -13,3 +13,17 @@ export function getSelect() {
     method: 'get'
   })
 }
+export function addMenu(data) {
+  return request({
+    url: '/menu/insert',
+    method: 'post',
+    data
+  })
+}
+export function updateMenu(data) {
+  return request({
+    url: '/menu/updateMenu',
+    method: 'post',
+    data
+  })
+}

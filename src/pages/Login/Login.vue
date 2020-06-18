@@ -17,8 +17,8 @@
           </el-input>
 
         </el-form-item>
-        <el-form-item class="form-item" prop="passWord">
-          <el-input v-model="login.passWord" placeholder="请输入密码" type="password" autocomplete="off">
+        <el-form-item class="form-item" prop="password">
+          <el-input v-model="login.password" placeholder="请输入密码" type="password" autocomplete="off">
             <svg-icon
               slot="prefix"
               class="icon"
@@ -44,7 +44,7 @@
               </el-input>
             </el-col>
             <el-col :span="12">
-              <el-image class="code-image" />
+              <el-image class="code-image" src="http://localhost:8080/captchaImage" />
             </el-col>
           </el-row>
         </el-form-item>
@@ -78,7 +78,7 @@ export default {
         callback()
       }
     }
-    var validatePassWord = (rule, value, callback) => {
+    var validatePassword = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'))
       } else {
@@ -88,15 +88,15 @@ export default {
     return {
       login: {
         userName: 'admin',
-        passWord: 'admin',
-        code: '2651'
+        password: '123456',
+        code: 'PMcB'
       },
       rules: {
         userName: [
           { validator: validateUserName, trigger: 'blur' }
         ],
-        passWord: [
-          { validator: validatePassWord, trigger: 'blur' }
+        password: [
+          { validator: validatePassword, trigger: 'blur' }
         ],
         code: [
           { validator: checkCode, trigger: 'blur' }
@@ -114,9 +114,7 @@ export default {
           // 登录处理
           this.setUser(this.login).then(res => {
             if (res) {
-              this.$router.push({ path: this.redirect || '/' }).catch(err => {
-                console.log(err)
-              })
+              this.$router.push({ path: this.redirect || '/' })
             }
           }).catch(err => {
             console.log(err)

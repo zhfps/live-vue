@@ -20,6 +20,11 @@ export const routes = [
         name: 'Menu',
         component: () => import('@/pages/common/MenuPage/MenuPage'),
         meta: { title: '菜单管理', icon: 'dog', color: '#eee' }
+      }, {
+        path: 'permission',
+        name: 'Permission',
+        component: () => import('@/pages/common/Permission/PermissionPage'),
+        meta: { title: '菜单管理', icon: 'dog', color: '#eee' }
       }
     ]
   },

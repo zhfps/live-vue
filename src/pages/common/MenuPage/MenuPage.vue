@@ -23,7 +23,7 @@
     <el-card class="table-content">
       <el-row class="nav-bar">
         <el-button type="primary" size="mini" @click="show =!show">新增</el-button>
-        <el-button type="warning" size="mini">修改</el-button>
+        <el-button type="warning" size="mini" @click="handleUpdateDialog">修改</el-button>
         <el-button type="danger" size="mini">删除</el-button>
         <el-button-group style="float: right;">
           <el-button type="primary" icon="el-icon-search" size="mini" @click="searchShow = !searchShow" />
@@ -33,11 +33,13 @@
       <div class="table">
         <el-table
           style="width: 100%"
-          :data="tableData"
           row-key="id"
           border
           :stripe="true"
           :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+          :data="tableData"
+          highlight-current-row
+          @current-change="handleCurrentChange"
         >
           <el-table-column
             label="菜单名称"
@@ -88,27 +90,30 @@
         </el-table>
       </div>
     </el-card>
+    <!--新增-->
     <el-dialog
       v-dialog-drag
-      title="提示"
+      title="新增"
       :visible.sync="show"
       width="400px"
-      center
     >
-      <el-form label-width="80px" :model="menu" style="padding-right: 15px;">
+      <el-form ref="menuForm" label-width="80px" :rules="rules" :model="menu" style="padding-right: 15px;">
         <el-form-item size="mini" label="父节点">
           <el-cascader
-                  style="width: 100%;"
-                  v-model="menu.parentId"
-                  :options="options"
-                  :props="{ checkStrictly: true, emitPath: false}"
-                  clearable
+            v-model="menu.parentId"
+            style="width: 100%;"
+            :options="options"
+            :props="{ checkStrictly: true, emitPath: false}"
+            clearable
           />
         </el-form-item>
         <el-form-item size="mini" label="菜单名称">
           <el-input v-model="menu.title" placeholder="菜单名称" />
         </el-form-item>
-        <el-form-item size="mini" label="组件名称">
+        <el-form-item size="mini" label="路径">
+          <el-input v-model="menu.path" placeholder="路径" />
+        </el-form-item>
+        <el-form-item prop="name" size="mini" label="组件名称">
           <el-input v-model="menu.name" placeholder="前端页面名称" />
         </el-form-item>
         <el-form-item size="mini" label="图标">
@@ -132,16 +137,73 @@
             <el-option label="页面" value="页面" />
           </el-select>
         </el-form-item>
-
       </el-form>
+      <span slot="footer" style="text-align: right;">
+        <el-button type="primary" size="mini" @click="onSubmit('menuForm')">确定</el-button>
+        <el-button size="mini">取消</el-button>
+      </span>
+    </el-dialog>
+    <!--修改菜单-->
+    <el-dialog
+      v-dialog-drag
+      title="修改"
+      :visible.sync="updateShow"
+      width="400px"
+    >
+      <el-form ref="updateForm" label-width="80px" :rules="rules" :model="update" style="padding-right: 15px;">
+        <el-form-item size="mini" label="父节点">
+          <el-cascader
+            v-model="update.parentId"
+            style="width: 100%;"
+            :options="options"
+            :props="{ checkStrictly: true, emitPath: false}"
+            clearable
+          />
+        </el-form-item>
+        <el-form-item size="mini" label="菜单名称">
+          <el-input v-model="update.title" placeholder="菜单名称" />
+        </el-form-item>
+        <el-form-item size="mini" label="路径">
+          <el-input v-model="update.path" placeholder="路径" />
+        </el-form-item>
+        <el-form-item prop="name" size="mini" label="组件名称">
+          <el-input v-model="update.name" placeholder="前端页面名称" />
+        </el-form-item>
+        <el-form-item size="mini" label="图标">
+          <el-input v-model="update.icon" placeholder="图标" />
+        </el-form-item>
+        <el-form-item size="mini" label="权限标识">
+          <el-input v-model="update.permission" placeholder="权限标识" />
+        </el-form-item>
+        <el-form-item size="mini" label="序号">
+          <el-input v-model="update.sort" placeholder="序号" />
+        </el-form-item>
+        <el-form-item size="mini" label="菜单状态">
+          <el-select v-model="update.status" size="mini" style="width: 100%;" placeholder="菜单状态">
+            <el-option label="禁用" value="禁用" />
+            <el-option label="启用" value="启用" />
+          </el-select>
+        </el-form-item>
+        <el-form-item size="mini" label="菜单类型">
+          <el-select v-model="update.directory" size="mini" style="width: 100%;" placeholder="菜单类型">
+            <el-option label="目录" value="目录" />
+            <el-option label="页面" value="页面" />
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" style="text-align: right;">
+        <el-button type="primary" size="mini" @click="handleUpdate('updateForm')">确定</el-button>
+        <el-button size="mini">取消</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import '@/assets/styles/public.scss'
 import './_MenuPage.scss'
-import { getTable, getSelect } from '@/api/module/common'
-
+import { getTable, getSelect, addMenu, updateMenu } from '@/api/module/common'
+import { Message } from 'element-ui'
 export default {
   name: 'MenuPage',
   data() {
@@ -158,12 +220,20 @@ export default {
         sort: '',
         status: '',
         directory: '',
-        title: ''
+        title: '',
+        path: ''
       },
+      update: {},
       show: false,
+      updateShow: false,
       tableData: [],
       searchShow: false,
-      options: []
+      options: [],
+      rules: {
+        name: [
+          { required: true, message: '不能为空', trigger: 'blur' }
+        ]
+      }
     }
   },
   created() {
@@ -180,6 +250,76 @@ export default {
         status: '全部'
       }
       this.setTable()
+    },
+    handleCurrentChange(val) {
+      if (val != null) {
+        this.update = (({ id,
+          parentId,
+          name,
+          permission,
+          sort,
+          status,
+          directory,
+          path }) => ({ id,
+          parentId,
+          name,
+          permission,
+          sort,
+          status,
+          directory,
+          path }))(val)
+        this.update.title = val.meta.title
+        this.update.icon = val.meta.icon
+      }
+    },
+    handleUpdateDialog() {
+      if (Object.keys(this.update).length > 0) {
+        this.updateShow = true
+      }
+    },
+    onSubmit(name) {
+      this.$refs[name].validate((valid) => {
+        if (!valid) {
+          return false
+        } else {
+          new Promise((resolve, reject) => {
+            addMenu(this.menu).then(res => {
+              if (res) {
+                this.setTable()
+                Message({
+                  type: 'success',
+                  message: '新增成功',
+                  showClose: true
+                })
+                this.show = false
+                resolve(res)
+              }
+            }).catch(err => reject(err))
+          })
+        }
+      })
+    },
+    handleUpdate(name) {
+      this.$refs[name].validate((valid) => {
+        if (!valid) {
+          return false
+        } else {
+          new Promise((resolve, reject) => {
+            updateMenu(this.update).then(res => {
+              if (res) {
+                this.setTable()
+                Message({
+                  type: 'success',
+                  message: '修改成功',
+                  showClose: true
+                })
+                this.updateShow = false
+                resolve(res)
+              }
+            }).catch(err => reject(err))
+          })
+        }
+      })
     },
     setTable() {
       new Promise((resolve, reject) => {

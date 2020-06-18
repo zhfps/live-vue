@@ -1,5 +1,7 @@
 import axios from 'axios'
+import router from '@/router'
 import { Loading, Notification } from 'element-ui'
+import state from '@/state'
 let loading
 const startLoading = () => {
   loading = Loading.service({
@@ -9,15 +11,15 @@ const startLoading = () => {
     background: 'rgba(45,58,75,0.5)'
   })
 }
-// create an axios instance
 const service = axios.create({
-  baseURL: '/api', // url = base url + request url
-  timeout: 3000 // request timeout
+  baseURL: '/api',
+  timeout: 3000
 })
 
 // request interceptor
 service.interceptors.request.use(
   config => {
+    config.headers['Access_Token'] = state.getters.Access_Token
     startLoading()
     return config
   },
@@ -34,8 +36,9 @@ service.interceptors.response.use(
     const { code, data } = response.data
     // 根据 code 进行判断
     if (code === 200) {
-      // 如果没有 code 代表这不是项目后端开发的接口 比如可能是 admin 请求最新版本
       return data
+    } else if (code === 403) {
+      router.push('/login')
     } else {
       Notification({
         message: response.data.msg,
@@ -47,8 +50,9 @@ service.interceptors.response.use(
   },
   error => {
     loading.close()
+    router.push('/login')
     Notification({
-      message: '未知错误，请联系管理员',
+      message: error.message,
       type: 'error',
       position: 'bottom-right',
       duration: 3 * 1000

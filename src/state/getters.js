@@ -2,6 +2,6 @@ const getters = {
   visitedViews: state => state.tagsView.visitedViews,
   cachedViews: state => state.tagsView.cachedViews,
   menus: state => state.sideMenu.menus,
-  custom: state => state.userInfo.custom
+  Access_Token: state => state.userInfo.Access_Token
 }
 export default getters

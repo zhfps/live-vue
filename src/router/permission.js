@@ -12,9 +12,9 @@ router.beforeEach(async(to, from, next) => {
     next()
     NProgress.done()
   } else {
-    const custom = state.getters.custom
-    if (_.isEmpty(custom)) {
-      document.title = 'vue/login'
+    const token = state.getters.Access_Token
+    if (_.isEmpty(token)) {
+      document.title = '登录'
       next('/login')
       NProgress.done()
     } else {
