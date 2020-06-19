@@ -24,10 +24,10 @@
       <el-row class="nav-bar">
         <el-button type="primary" size="mini" @click="show =!show">新增</el-button>
         <el-button type="warning" size="mini" @click="handleUpdateDialog">修改</el-button>
-        <el-button type="danger" size="mini">删除</el-button>
+        <el-button type="danger" size="mini" @click="handleDelete">删除</el-button>
         <el-button-group style="float: right;">
           <el-button type="primary" icon="el-icon-search" size="mini" @click="searchShow = !searchShow" />
-          <el-button type="primary" icon="el-icon-refresh" size="mini" />
+          <el-button type="primary" icon="el-icon-refresh" size="mini" @click="handleRefresh"/>
         </el-button-group>
       </el-row>
       <div class="table">
@@ -198,12 +198,11 @@
     </el-dialog>
   </div>
 </template>
-
 <script>
 import '@/assets/styles/public.scss'
 import './_MenuPage.scss'
-import { getTable, getSelect, addMenu, updateMenu } from '@/api/module/common'
-import { Message } from 'element-ui'
+import { getTable, getSelect, addMenu, updateMenu, updateDelete } from '@/api/module/common'
+import { Message, MessageBox } from 'element-ui'
 export default {
   name: 'MenuPage',
   data() {
@@ -251,6 +250,9 @@ export default {
       }
       this.setTable()
     },
+    handleRefresh() {
+      this.setTable()
+    },
     handleCurrentChange(val) {
       if (val != null) {
         this.update = (({ id,
@@ -275,6 +277,12 @@ export default {
     handleUpdateDialog() {
       if (Object.keys(this.update).length > 0) {
         this.updateShow = true
+      } else {
+        Message({
+          type: 'info',
+          message: '请选择数据',
+          showClose: true
+        })
       }
     },
     onSubmit(name) {
@@ -320,6 +328,27 @@ export default {
           })
         }
       })
+    },
+    handleDelete() {
+      if (Object.keys(this.update).length > 0) {
+        MessageBox.confirm(`确定删除${this.update.name}菜单吗？`).then(() => {
+          updateDelete(this.update.id).then(res => {
+            if (res) {
+              Message({
+                type: 'success',
+                message: '删除',
+                showClose: true
+              })
+            }
+          })
+        })
+      } else {
+        Message({
+          type: 'info',
+          message: '请选择数据',
+          showClose: true
+        })
+      }
     },
     setTable() {
       new Promise((resolve, reject) => {

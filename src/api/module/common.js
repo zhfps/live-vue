@@ -27,3 +27,12 @@ export function updateMenu(data) {
     data
   })
 }
+export function updateDelete(id) {
+  return request({
+    url: '/menu/delete',
+    method: 'delete',
+    params: {
+      id
+    }
+  })
+}
