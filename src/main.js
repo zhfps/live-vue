@@ -1,30 +1,27 @@
 import Vue from 'vue'
 import App from './App.vue'
-import VueRouter from 'vue-router'
-import store from '@/state'
-import router from '@/router'
-import '@/directive/drag'
+import router from './router'
 import ElementUI from 'element-ui'
-import i18n from '@/lang'
-import SvgIcon from 'vue-svgicon'
-import contentmenu from 'v-contextmenu'
-import 'v-contextmenu/dist/index.css'
-
+import VueI18n from 'vue-i18n'
+import { messages } from '@/plugin/i18n'
 import '@/router/permission'
-import '@/icons/svg/index'
-import '@/directive/drag'
-import 'element-ui/lib/theme-chalk/index.css'
-Vue.use(VueRouter)
-Vue.use(ElementUI)
-Vue.use(SvgIcon, {
-  tagName: 'svg-icon'
-})
-Vue.use(contentmenu)
-Vue.config.productionTip = false
+import 'element-ui/lib/theme-chalk/index.css' // 默认主题
+// import './assets/css/theme-green/index.css'; // 浅绿色主题
+import './assets/css/icon.css'
+import '@/directive/directives'
+import 'babel-polyfill'
 
+Vue.config.productionTip = false
+Vue.use(VueI18n)
+Vue.use(ElementUI, {
+  size: 'small'
+})
+const i18n = new VueI18n({
+  locale: 'zh',
+  messages
+})
 new Vue({
   router,
   i18n,
-  store,
   render: h => h(App)
 }).$mount('#app')

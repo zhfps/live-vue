@@ -2,7 +2,6 @@ import router from './index'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import state from '@/state'
-import _ from 'lodash'
 NProgress.configure({ showSpinner: false })
 // 路由守卫
 router.beforeEach(async(to, from, next) => {
@@ -13,7 +12,7 @@ router.beforeEach(async(to, from, next) => {
     NProgress.done()
   } else {
     const token = state.getters.Access_Token
-    if (_.isEmpty(token)) {
+    if (token === '') {
       document.title = '登录'
       next('/login')
       NProgress.done()

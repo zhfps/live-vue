@@ -1,18 +1,7 @@
 import { login } from '@/api/module/user'
 
-function getAccessToken() {
-  const Access_Token = localStorage.getItem('Access_Token')
-  if (Access_Token !== undefined) {
-    return Access_Token
-  } else {
-    return null
-  }
-}
-function setAccessToken(token) {
-  localStorage.setItem('Access_Token', token)
-}
 const state = {
-  Access_Token: getAccessToken()
+  Access_Token: ''
 }
 const mutations = {
   SET_USER_INFO: (sate, user) => {
@@ -26,7 +15,6 @@ const actions = {
   setUserInfo({ commit }, user) {
     return new Promise((resolve, reject) => {
       login(user).then(res => {
-        setAccessToken(res)
         commit('SET_ACCESS_TOKEN', res)
         resolve(res)
       })

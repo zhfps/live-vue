@@ -5,7 +5,8 @@
       <div class="logo" />
       <el-form ref="ruleForm" :model="login" status-icon :rules="rules">
         <el-form-item class="form-item" prop="userName">
-          <el-input v-model="login.userName" type="txt" placeholder="请输入用户名" autocomplete="off">
+          <el-input v-model="login.userName" type="text" placeholder="请输入用户名" autocomplete="off">
+            <template slot="prepend" style="width: 120px;">
             <svg-icon
               slot="prefix"
               class="icon"
@@ -14,42 +15,30 @@
               height="25"
               color="#000"
             />
+            </template>
           </el-input>
 
         </el-form-item>
         <el-form-item class="form-item" prop="password">
           <el-input v-model="login.password" placeholder="请输入密码" type="password" autocomplete="off">
-            <svg-icon
-              slot="prefix"
-              class="icon"
-              name="Password"
-              width="18"
-              height="25"
-              color="#000"
-            />
+            <template slot="prepend" style="width: 120px;">
+              <svg-icon
+                slot="prefix"
+                name="Password"
+                width="18"
+                height="25"
+                color="#000"
+              />
+            </template>
           </el-input>
         </el-form-item>
         <el-form-item class="form-item-code" prop="code">
-          <el-row :gutter="20">
-            <el-col :span="12">
-              <el-input v-model="login.code" class="code" placeholder="请输入验证码">
-                <svg-icon
-                  slot="prefix"
-                  class="icon"
-                  name="dentifying_code"
-                  width="18"
-                  height="25"
-                  color="#000"
-                />
-              </el-input>
-            </el-col>
-            <el-col :span="12">
-              <el-image class="code-image" src="http://localhost:8080/captchaImage" />
-            </el-col>
-          </el-row>
+          <el-input v-model="login.code" type="text" placeholder="请输入验证码">
+              <el-image slot="append" class="login-code" :src="codeUrl" @click="replaceCode" />
+          </el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="submit" @click="submitForm('ruleForm')">提交</el-button>
+          <el-button type="primary" class="submit" @click="submitForm('ruleForm')">登录</el-button>
         </el-form-item>
       </el-form>
       <div class="reg-bar">
@@ -91,6 +80,7 @@ export default {
         password: '123456',
         code: 'PMcB'
       },
+      codeUrl: 'http://localhost:8080/captchaImage/1',
       rules: {
         userName: [
           { validator: validateUserName, trigger: 'blur' }
@@ -108,6 +98,10 @@ export default {
     ...mapActions({
       setUser: 'userInfo/setUserInfo'
     }),
+    replaceCode() {
+      const url = 'http://localhost:8080/captchaImage/' + Math.random()
+      this.codeUrl = url
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -131,3 +125,13 @@ export default {
   }
 }
 </script>
+<style>
+  .login-code {
+    height: 38px;
+    width: 120px;
+    display: block;
+    margin: 0px -20px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+  }
+</style>
