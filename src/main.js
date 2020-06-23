@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import store from './state/index'
 import router from './router'
 import ElementUI from 'element-ui'
 import VueI18n from 'vue-i18n'
@@ -13,14 +14,13 @@ import 'babel-polyfill'
 
 Vue.config.productionTip = false
 Vue.use(VueI18n)
-Vue.use(ElementUI, {
-  size: 'small'
-})
+Vue.use(ElementUI)
 const i18n = new VueI18n({
   locale: 'zh',
   messages
 })
 new Vue({
+  store,
   router,
   i18n,
   render: h => h(App)
