@@ -3,6 +3,7 @@ import App from './App.vue'
 import store from './state/index'
 import router from './router'
 import ElementUI from 'element-ui'
+import SvgIcon from 'vue-svgicon'
 import VueI18n from 'vue-i18n'
 import { messages } from '@/plugin/i18n'
 import '@/router/permission'
@@ -15,6 +16,9 @@ import 'babel-polyfill'
 Vue.config.productionTip = false
 Vue.use(VueI18n)
 Vue.use(ElementUI)
+Vue.use(SvgIcon, {
+  tagName: 'svg-icon'
+})
 const i18n = new VueI18n({
   locale: 'zh',
   messages

@@ -49,17 +49,19 @@
   </div>
 </template>
 <script>
-import bus from '../../plugin/bus'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   data() {
     return {
-      collapse: false,
       fullscreen: false,
       name: 'linxin',
       message: 2
     }
   },
   computed: {
+    ...mapGetters([
+      'collapse'
+    ]),
     username() {
       const username = localStorage.getItem('ms_username')
       return username || this.name
@@ -71,6 +73,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      changCollapse: 'config/changCollapse'
+    }
+    ),
     // 用户名下拉菜单选择事件
     handleCommand(command) {
       if (command === 'loginout') {
@@ -80,8 +86,7 @@ export default {
     },
     // 侧边栏折叠
     collapseChage() {
-      this.collapse = !this.collapse
-      bus.$emit('collapse', this.collapse)
+      this.changCollapse()
     },
     // 全屏事件
     handleFullScreen() {

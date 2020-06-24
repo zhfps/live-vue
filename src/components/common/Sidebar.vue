@@ -50,11 +50,11 @@
 </template>
 
 <script>
-import bus from '../../plugin/bus'
+import { mapGetters } from 'vuex'
 export default {
+  name: 'Sidebar',
   data() {
     return {
-      collapse: false,
       items: [
         {
           icon: 'el-icon-lx-home',
@@ -154,16 +154,12 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'collapse'
+    ]),
     onRoutes() {
       return this.$route.path.replace('/', '')
     }
-  },
-  created() {
-    // 通过 Event Bus 进行组件间通信，来折叠侧边栏
-    bus.$on('collapse', msg => {
-      this.collapse = msg
-      bus.$emit('collapse-content', msg)
-    })
   }
 }
 </script>
