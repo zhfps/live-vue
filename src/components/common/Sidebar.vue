@@ -28,13 +28,23 @@
                   v-for="(threeItem,i) in subItem.subs"
                   :key="i"
                   :index="threeItem.index"
-                >{{ threeItem.title }}</el-menu-item>
+                >
+                  <template slot="title">
+                    <i :class="threeItem.icon" />
+                    <span slot="title">{{ threeItem.title }}</span>
+                  </template>
+                </el-menu-item>
               </el-submenu>
               <el-menu-item
                 v-else
                 :key="subItem.index"
                 :index="subItem.index"
-              >{{ subItem.title }}</el-menu-item>
+              >
+                <template slot="title">
+                  <i :class="subItem.icon" />
+                  <span slot="title">{{ subItem.title }}</span>
+                </template>
+              </el-menu-item>
             </template>
           </el-submenu>
         </template>
@@ -60,6 +70,17 @@ export default {
           icon: 'el-icon-lx-home',
           index: 'dashboard',
           title: '系统首页'
+        }, {
+          icon: 'el-icon-setting',
+          index: 'system',
+          title: '系统管理',
+          subs: [
+            {
+              icon: 'el-icon-setting',
+              index: 'menus',
+              title: '菜单管理'
+            }
+          ]
         },
         {
           icon: 'el-icon-lx-cascades',

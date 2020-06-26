@@ -111,7 +111,6 @@
 
 <script>
 import Schart from 'vue-schart'
-// import bus from '../../plugin/bus'
 export default {
   name: 'Dashboard',
   components: {
@@ -226,17 +225,8 @@ export default {
       return this.name === 'admin' ? '超级管理员' : '普通用户'
     }
   },
-  // created() {
-  //     this.handleListener();
-  //     this.changeDate();
-  // },
-  // activated() {
-  //     this.handleListener();
-  // },
-  // deactivated() {
-  //     window.removeEventListener('resize', this.renderChart);
-  //     bus.$off('collapse', this.handleBus);
-  // },
+  created() {
+  },
   methods: {
     changeDate() {
       const now = new Date().getTime()

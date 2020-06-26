@@ -21,6 +21,11 @@ export default new Router({
           meta: { title: '系统首页' }
         },
         {
+          path: '/menus',
+          component: () => import(/* webpackChunkName: "dashboard" */ '@/pages/Menus/Menus'),
+          meta: { title: '菜单管理' }
+        },
+        {
           path: '/icon',
           component: () => import(/* webpackChunkName: "icon" */ '../pages/page/Icon.vue'),
           meta: { title: '自定义图标' }
