@@ -79,6 +79,11 @@ export default {
               icon: 'el-icon-setting',
               index: 'menus',
               title: '菜单管理'
+            },
+            {
+              icon: 'el-icon-user',
+              index: 'users',
+              title: '用户管理'
             }
           ]
         },

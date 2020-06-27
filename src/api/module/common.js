@@ -1,5 +1,6 @@
 import request from '@/api/request-filter'
 
+// 菜单类
 export function getTable(params) {
   return request({
     url: '/menu/getTree',
@@ -34,5 +35,13 @@ export function updateDelete(id) {
     params: {
       id
     }
+  })
+}
+// 用户管理
+export function getUsers(params) {
+  return request({
+    url: '/user/queryPage',
+    method: 'get',
+    params
   })
 }

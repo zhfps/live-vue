@@ -22,8 +22,12 @@ export default new Router({
         },
         {
           path: '/menus',
-          component: () => import(/* webpackChunkName: "dashboard" */ '@/pages/Menus/Menus'),
+          component: () => import('@/pages/Menus/Menus'),
           meta: { title: '菜单管理' }
+        }, {
+          path: '/users',
+          component: () => import('@/pages/Users/Users'),
+          meta: { title: '用户管理' }
         },
         {
           path: '/icon',

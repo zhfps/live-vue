@@ -1,11 +1,11 @@
 <template>
-  <div class="Menus">
+  <div class="Users">
     <el-card v-show="searchShow" class="tool-card">
       <el-form class="search" label-width="80px" :inline="true" :model="query">
-        <el-form-item size="mini" label="菜单名称">
-          <el-input v-model="query.name" placeholder="菜单名称" />
+        <el-form-item size="mini" label="用户名">
+          <el-input v-model="query.name" placeholder="用户名" />
         </el-form-item>
-        <el-form-item size="mini" label="菜单状态">
+        <el-form-item size="mini" label="用户状态">
           <el-select v-model="query.status" size="mini" placeholder="菜单状态">
             <el-option label="全部" value="全部" />
             <el-option label="禁用" value="禁用" />
@@ -33,61 +33,83 @@
       <div class="table">
         <el-table
           style="width: 100%"
-          row-key="id"
           border
           :stripe="true"
-          :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
           :data="tableData"
+          size="small"
           highlight-current-row
           @current-change="handleCurrentChange"
         >
           <el-table-column
-            label="菜单名称"
-            width="180"
-          >
-            <template slot-scope="{row}">
-              <span>{{ row.meta.title }}</span>
-            </template>
-          </el-table-column>
+            type="index"
+            width="50"
+          />
           <el-table-column
-            label="图标"
-            width="180"
-          >
-            <template slot-scope="{row}">
-              <svg-icon
-                class="pre-icon"
-                :name="row.meta.icon"
-                width="18"
-                height="18"
-              />
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="sort"
-            label="排序"
+            prop="username"
+            label="用户名"
             width="180"
           />
           <el-table-column
-            prop="path"
-            label="请求地址"
-            width="300"
+            prop="nickname"
+            label="昵称"
+            width="180"
+          />
+          <el-table-column
+            prop="roleName"
+            label="角色"
+            width="180"
+          />
+          <el-table-column
+            prop="icon"
+            label="头像"
+            width="180"
+          />
+          <el-table-column
+            prop="phone"
+            label="电话"
+            width="180"
+          />
+          <el-table-column
+            prop="telephone"
+            label="移动电话"
+            width="180"
+          />
+          <el-table-column
+            prop="email"
+            label="邮件"
+            width="180"
+          />
+          <el-table-column
+            prop="birthday"
+            label="出生年月"
+            width="180"
+          /> <el-table-column
+            prop="sex"
+            label="性别"
+            width="180"
           />
           <el-table-column
             prop="status"
             label="状态"
-            width="160"
+            width="180"
           />
           <el-table-column
-            prop="directory"
-            label="类型"
-            width="160"
-          />
-          <el-table-column
-            prop="permission"
-            label="权限标识"
-            width="300"
+            prop="createTime"
+            label="注册时间"
+            width="180"
           />
         </el-table>
+      </div>
+      <div class="pagination">
+        <el-pagination
+          :current-page="query.currentPage"
+          :page-sizes="[100, 200, 300, 400]"
+          :page-size="100"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="400"
+          @size-change="handleSizeChange"
+          @current-change="handlePageChange"
+        />
       </div>
     </el-card>
     <!--新增-->
@@ -199,17 +221,19 @@
   </div>
 </template>
 <script>
-import './Menus.scss'
+import './_Users.scss'
 import '@/assets/styles/public.scss'
-import { getTable, getSelect, addMenu, updateMenu, updateDelete } from '@/api/module/common'
+import { getUsers, getSelect, addMenu, updateMenu, updateDelete } from '@/api/module/common'
 import { Message, MessageBox } from 'element-ui'
 export default {
-  name: 'Menus',
+  name: 'Users',
   data() {
     return {
       query: {
-        name: '',
-        status: '全部'
+        currentPage: 1,
+        order: 'id',
+        pageSize: 30,
+        sortType: 1
       },
       menu: {
         id: '',
@@ -240,6 +264,12 @@ export default {
     this.setSelect()
   },
   methods: {
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`)
+    },
+    handlePageChange(val) {
+      console.log(`当前页: ${val}`)
+    },
     handleCancle(type) {
       if (type === 'update') {
         this.updateShow = false
@@ -373,11 +403,10 @@ export default {
       }
     },
     setTable() {
-      new Promise((resolve, reject) => {
-        getTable(this.query).then(res => {
-          this.tableData = res
-          resolve(res)
-        }).catch(err => reject(err))
+      getUsers(this.query).then(res => {
+        const { list } = res
+        this.tableData = list
+        return res
       })
     },
     setSelect() {
