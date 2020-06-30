@@ -1,7 +1,8 @@
 import router from './index'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-import state from '@/state'
+import { getCache } from '@/plugin/cache'
+const token = getCache('token')
 NProgress.configure({ showSpinner: false })
 // 路由守卫
 router.beforeEach(async(to, from, next) => {
@@ -11,8 +12,7 @@ router.beforeEach(async(to, from, next) => {
     next()
     NProgress.done()
   } else {
-    const token = state.getters.Access_Token
-    if (token === '') {
+    if (token === '' || token === undefined || token === null) {
       document.title = '登录'
       next('/login')
       NProgress.done()

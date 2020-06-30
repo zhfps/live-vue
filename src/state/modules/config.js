@@ -1,6 +1,8 @@
 const state = {
   collapse: true,
-  tagsList: []
+  tagsList: [],
+  rootPath: 'http://localhost:8080',
+  pageSizeList: [30, 100, 150]
 }
 const mutations = {
   CHANGE_COLLAPSE: (state) => {

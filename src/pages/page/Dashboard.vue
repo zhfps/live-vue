@@ -2,22 +2,22 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="8">
-        <el-card shadow="hover" class="mgb20" style="height:252px;">
+        <el-card v-if="UserInfo.nickname" shadow="hover" class="mgb20" style="height:252px;">
           <div class="user-info">
-            <img src="../../assets/img/img.jpg" class="user-avator" alt>
+            <img :src="'http://localhost:8080'+UserInfo.icon" class="user-avator" alt>
             <div class="user-info-cont">
-              <div class="user-info-name">{{ name }}</div>
-              <div>{{ role }}</div>
+              <div class="user-info-name">{{ UserInfo.name }}</div>
+              <div>{{ UserInfo.nickname }}</div>
             </div>
           </div>
-          <div class="user-info-list">
-            上次登录时间：
-            <span>2019-11-01</span>
-          </div>
-          <div class="user-info-list">
-            上次登录地点：
-            <span>东莞</span>
-          </div>
+<!--          <div class="user-info-list">-->
+<!--            上次登录时间：-->
+<!--            <span>2019-11-01</span>-->
+<!--          </div>-->
+<!--          <div class="user-info-list">-->
+<!--            上次登录地点：-->
+<!--            <span>东莞</span>-->
+<!--          </div>-->
         </el-card>
         <el-card shadow="hover" style="height:252px;">
           <div slot="header" class="clearfix">
@@ -94,28 +94,13 @@
         </el-card>
       </el-col>
     </el-row>
-    <el-row :gutter="20">
-      <el-col :span="12">
-        <el-card shadow="hover">
-          <schart ref="bar" class="schart" canvas-id="bar" :options="options" />
-        </el-card>
-      </el-col>
-      <el-col :span="12">
-        <el-card shadow="hover">
-          <schart ref="line" class="schart" canvas-id="line" :options="options2" />
-        </el-card>
-      </el-col>
-    </el-row>
   </div>
 </template>
 
 <script>
-import Schart from 'vue-schart'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Dashboard',
-  components: {
-    Schart
-  },
   data() {
     return {
       name: localStorage.getItem('ms_username'),
@@ -223,11 +208,18 @@ export default {
   computed: {
     role() {
       return this.name === 'admin' ? '超级管理员' : '普通用户'
-    }
+    },
+    ...mapGetters([
+      'UserInfo'
+    ])
   },
   created() {
+    // this.GetUserInfo()
   },
   methods: {
+    ...mapActions({
+      GetUserInfo: 'userInfo/GetUserInfo'
+    }),
     changeDate() {
       const now = new Date().getTime()
       this.data.forEach((item, index) => {

@@ -7,14 +7,14 @@
         <el-form-item class="form-item" prop="userName">
           <el-input v-model="login.userName" type="text" placeholder="请输入用户名" autocomplete="off">
             <template slot="prepend" style="width: 120px;">
-            <svg-icon
-              slot="prefix"
-              class="icon"
-              name="user"
-              width="18"
-              height="25"
-              color="#000"
-            />
+              <svg-icon
+                slot="prefix"
+                class="icon"
+                name="user"
+                width="18"
+                height="25"
+                color="#000"
+              />
             </template>
           </el-input>
 
@@ -34,7 +34,7 @@
         </el-form-item>
         <el-form-item class="form-item-code" prop="code">
           <el-input v-model="login.code" type="text" placeholder="请输入验证码">
-              <el-image slot="append" class="login-code" :src="codeUrl" @click="replaceCode" />
+            <el-image slot="append" class="login-code" :src="codeUrl" @click="replaceCode" />
           </el-input>
         </el-form-item>
         <el-form-item>
@@ -96,7 +96,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      setUser: 'userInfo/setUserInfo'
+      Login: 'userInfo/Login',
+      GetUserInfo: 'userInfo/GetUserInfo'
     }),
     replaceCode() {
       const url = 'http://localhost:8080/captchaImage/' + Math.random()
@@ -106,12 +107,11 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // 登录处理
-          this.setUser(this.login).then(res => {
+          this.Login(this.login).then(res => {
             if (res) {
+              this.GetUserInfo()
               this.$router.push({ path: this.redirect || '/' })
             }
-          }).catch(err => {
-            console.log(err)
           })
         } else {
           this.resetForm(formName)

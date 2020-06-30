@@ -19,7 +19,7 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    config.headers['Access_Token'] = state.getters.Access_Token
+    if (config.url !== '/login') { config.headers['Access_Token'] = state.getters.Access_Token }
     startLoading()
     return config
   },

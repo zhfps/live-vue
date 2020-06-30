@@ -36,9 +36,11 @@
           border
           :stripe="true"
           :data="tableData"
+          :max-height="tableMaxHeight"
           size="small"
           highlight-current-row
           @current-change="handleCurrentChange"
+          @sort-change="handleSortChange"
         >
           <el-table-column
             type="index"
@@ -47,23 +49,31 @@
           <el-table-column
             prop="username"
             label="用户名"
+            sortable="custom"
             width="180"
           />
           <el-table-column
             prop="nickname"
             label="昵称"
+            sortable="custom"
             width="180"
           />
           <el-table-column
             prop="roleName"
             label="角色"
+            sortable="custom"
             width="180"
           />
           <el-table-column
             prop="icon"
+            align="center"
             label="头像"
-            width="180"
-          />
+            width="80"
+          >
+            <template slot-scope="{row}">
+              <el-avatar size="small" :src="rootPath + row.icon" />
+            </template>
+          </el-table-column>
           <el-table-column
             prop="phone"
             label="电话"
@@ -82,6 +92,7 @@
           <el-table-column
             prop="birthday"
             label="出生年月"
+            sortable="custom"
             width="180"
           /> <el-table-column
             prop="sex"
@@ -95,6 +106,7 @@
           />
           <el-table-column
             prop="createTime"
+            sortable="custom"
             label="注册时间"
             width="180"
           />
@@ -103,10 +115,10 @@
       <div class="pagination">
         <el-pagination
           :current-page="query.currentPage"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
+          :page-sizes="pageSizeList"
+          :page-size="query.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
+          :total="total"
           @size-change="handleSizeChange"
           @current-change="handlePageChange"
         />
@@ -223,10 +235,17 @@
 <script>
 import './_Users.scss'
 import '@/assets/styles/public.scss'
+import { mapGetters } from 'vuex'
 import { getUsers, getSelect, addMenu, updateMenu, updateDelete } from '@/api/module/common'
 import { Message, MessageBox } from 'element-ui'
 export default {
   name: 'Users',
+  computed: {
+    ...mapGetters([
+      'rootPath',
+      'pageSizeList'
+    ])
+  },
   data() {
     return {
       query: {
@@ -235,6 +254,7 @@ export default {
         pageSize: 30,
         sortType: 1
       },
+      tableMaxHeight: 500,
       menu: {
         id: '',
         parentId: '',
@@ -246,6 +266,7 @@ export default {
         title: '',
         path: ''
       },
+      total: 0,
       update: {},
       show: false,
       updateShow: false,
@@ -259,16 +280,49 @@ export default {
       }
     }
   },
+  watch: {
+    searchShow: function(n, o) {
+      if (n) {
+        this.tableMaxHeight = document.body.clientHeight - 220 - 135
+      } else {
+        this.tableMaxHeight = document.body.clientHeight - 127 - 135
+      }
+    }
+  },
   created() {
     this.setTable()
     this.setSelect()
   },
+  mounted() {
+    this.$nextTick(() => {
+      this.handleHeight()
+    })
+    window.onresize = () => {
+      const divs = document.getElementsByClassName('table')
+      this.tableMaxHeight = document.body.clientHeight - divs[0].offsetTop - 135
+    }
+  },
   methods: {
+    handleSortChange(data) {
+      if (data.order === 'ascending') {
+        this.query.sortType = 2
+      } else {
+        this.query.sortType = 1
+      }
+      this.query.order = data.prop
+      this.setTable()
+    },
+    handleHeight() {
+      const divs = document.getElementsByClassName('table')
+      this.tableMaxHeight = document.body.clientHeight - divs[0].offsetTop - 135
+    },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`)
+      this.query.pageSize = val
+      this.setTable()
     },
     handlePageChange(val) {
-      console.log(`当前页: ${val}`)
+      this.query.currentPage = val
+      this.setTable()
     },
     handleCancle(type) {
       if (type === 'update') {
@@ -404,8 +458,9 @@ export default {
     },
     setTable() {
       getUsers(this.query).then(res => {
-        const { list } = res
+        const { list, total } = res
         this.tableData = list
+        this.total = total
         return res
       })
     },

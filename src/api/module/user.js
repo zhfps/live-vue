@@ -7,3 +7,10 @@ export function login(params) {
     params
   })
 }
+// 权限管理
+export function getUserInfo() {
+  return request({
+    url: '/info',
+    method: 'get'
+  })
+}
