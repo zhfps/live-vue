@@ -30,4 +30,4 @@ https://zhfps.github.io/live-vue-dlist/
 
 ### 效果图
 
-![用户管理页面](../live-vue/prtscn/user.jpg)
+![用户管理页面](https://github.com/zhfps/live-vue/blob/master/prtscn/user.jpg)
