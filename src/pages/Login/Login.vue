@@ -33,7 +33,7 @@
           </el-input>
         </el-form-item>
         <el-form-item class="form-item-code" prop="code">
-          <el-input v-model="login.code" type="text" placeholder="请输入验证码">
+          <el-input v-model="login.code" type="text" placeholder="请输入验证码" @change="submitForm('ruleForm')">
             <el-image slot="append" class="login-code" :src="codeUrl" @click="replaceCode" />
           </el-input>
         </el-form-item>

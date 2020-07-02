@@ -3,7 +3,7 @@
     <el-card v-show="searchShow" class="tool-card">
       <el-form class="search" label-width="80px" :inline="true" :model="query">
         <el-form-item size="mini" label="用户名">
-          <el-input v-model="query.name" placeholder="用户名" />
+          <el-input v-model="query.userName" placeholder="用户名" />
         </el-form-item>
         <el-form-item size="mini" label="用户状态">
           <el-select v-model="query.status" size="mini" placeholder="菜单状态">
@@ -236,7 +236,7 @@
 import './_Users.scss'
 import '@/assets/styles/public.scss'
 import { mapGetters } from 'vuex'
-import { getUsers, getSelect, addMenu, updateMenu, updateDelete } from '@/api/module/common'
+import { getUsers, getSelect, addMenu, updateMenu, deleteUser } from '@/api/module/common'
 import { Message, MessageBox } from 'element-ui'
 export default {
   name: 'Users',
@@ -249,6 +249,8 @@ export default {
   data() {
     return {
       query: {
+        userName: null,
+        status: '全部',
         currentPage: 1,
         order: 'id',
         pageSize: 30,
@@ -349,10 +351,8 @@ export default {
       this.setTable()
     },
     reset() {
-      this.query = {
-        name: '',
-        status: '全部'
-      }
+      this.query.userName = null
+      this.query.status = '全部'
       this.setTable()
     },
     handleRefresh() {
@@ -360,23 +360,7 @@ export default {
     },
     handleCurrentChange(val) {
       if (val != null) {
-        this.update = (({ id,
-          parentId,
-          name,
-          permission,
-          sort,
-          status,
-          directory,
-          path }) => ({ id,
-          parentId,
-          name,
-          permission,
-          sort,
-          status,
-          directory,
-          path }))(val)
-        this.update.title = val.meta.title
-        this.update.icon = val.meta.icon
+        this.update = val
       }
     },
     handleUpdateDialog() {
@@ -436,8 +420,8 @@ export default {
     },
     handleDelete() {
       if (Object.keys(this.update).length > 0) {
-        MessageBox.confirm(`确定删除${this.update.title ? this.update.title : '该'}菜单吗？`).then(() => {
-          updateDelete(this.update.id).then(res => {
+        MessageBox.confirm(`确定删除${this.update.username ? this.update.username : '该'}用户吗？`).then(() => {
+          deleteUser(this.update.id).then(res => {
             if (res) {
               Message({
                 type: 'success',

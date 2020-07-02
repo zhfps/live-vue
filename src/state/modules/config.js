@@ -1,5 +1,5 @@
 const state = {
-  collapse: true,
+  collapse: false,
   tagsList: [],
   rootPath: 'http://localhost:8080',
   pageSizeList: [30, 100, 150]

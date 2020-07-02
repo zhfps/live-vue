@@ -27,3 +27,7 @@ yarn svg
 ```
 https://zhfps.github.io/live-vue-dlist/
 ```
+
+### 效果图
+
+![用户管理页面](../live-vue/prtscn/user.jpg)

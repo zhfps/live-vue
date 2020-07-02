@@ -19,3 +19,9 @@
   padding-top: 0;
   margin-top: 0;
 }
+.el-table__body tr.current-row>td{
+  background-color: #a0cfff;
+}
+.el-table--enable-row-hover .el-table__body tr:hover>td{
+  background-color: #9FB6CD;
+}

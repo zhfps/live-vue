@@ -45,3 +45,12 @@ export function getUsers(params) {
     params
   })
 }
+export function deleteUser(id) {
+  return request({
+    url: '/user/delete',
+    method: 'delete',
+    params: {
+      id
+    }
+  })
+}
