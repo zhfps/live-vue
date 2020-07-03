@@ -10,7 +10,8 @@ const mutations = {
     state.UserInfo = Object.assign({}, userInfo)
   },
   SET_ACCESS_TOKEN: (state, token) => {
-    state.Access_Token = token
+    const { Access_Token } = state
+    Object.assign(state, Access_Token)
   }
 }
 const actions = {

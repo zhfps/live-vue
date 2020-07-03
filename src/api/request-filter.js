@@ -2,6 +2,7 @@ import axios from 'axios'
 import router from '@/router'
 import { Loading, Notification } from 'element-ui'
 import state from '@/state'
+import { getCache } from '@/plugin/cache'
 let loading
 const startLoading = () => {
   loading = Loading.service({
@@ -19,7 +20,7 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    if (config.url !== '/login') { config.headers['Access_Token'] = state.getters.Access_Token }
+    if (config.url !== '/login') { config.headers['Access_Token'] = state.getters.Access_Token ? state.getters.Access_Token : getCache('token', 'text') }
     startLoading()
     return config
   },

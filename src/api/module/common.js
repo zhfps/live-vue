@@ -45,6 +45,13 @@ export function getUsers(params) {
     params
   })
 }
+export function CreateUser(data) {
+  return request({
+    url: '/user/insert',
+    method: 'post',
+    data
+  })
+}
 export function deleteUser(id) {
   return request({
     url: '/user/delete',

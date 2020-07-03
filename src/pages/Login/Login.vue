@@ -109,8 +109,10 @@ export default {
           // 登录处理
           this.Login(this.login).then(res => {
             if (res) {
-              this.GetUserInfo()
-              this.$router.push({ path: this.redirect || '/' })
+              this.GetUserInfo().then(res => {
+                this.$router.push({ path: this.redirect || '/' })
+                return res
+              })
             }
           })
         } else {

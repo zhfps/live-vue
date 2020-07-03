@@ -131,45 +131,15 @@
       :visible.sync="show"
       width="400px"
     >
-      <el-form ref="menuForm" label-width="80px" :rules="rules" :model="menu" style="padding-right: 15px;">
-        <el-form-item size="mini" label="父节点">
-          <el-cascader
-            v-model="menu.parentId"
-            style="width: 100%;"
-            :options="options"
-            :props="{ checkStrictly: true, emitPath: false}"
-            clearable
-          />
+      <el-form ref="menuForm" label-width="80px" :rules="rules" :model="user" style="padding-right: 15px;">
+        <el-form-item prop="username" size="mini" label="用户名">
+          <el-input v-model="user.username" placeholder="用户名" />
         </el-form-item>
-        <el-form-item size="mini" label="菜单名称">
-          <el-input v-model="menu.title" placeholder="菜单名称" />
+        <el-form-item prop="nickname" size="mini" label="昵称">
+          <el-input v-model="user.nickname" placeholder="昵称" />
         </el-form-item>
-        <el-form-item size="mini" label="路径">
-          <el-input v-model="menu.path" placeholder="路径" />
-        </el-form-item>
-        <el-form-item prop="name" size="mini" label="组件名称">
-          <el-input v-model="menu.name" placeholder="前端页面名称" />
-        </el-form-item>
-        <el-form-item size="mini" label="图标">
-          <el-input v-model="menu.icon" placeholder="图标" />
-        </el-form-item>
-        <el-form-item size="mini" label="权限标识">
-          <el-input v-model="menu.permission" placeholder="权限标识" />
-        </el-form-item>
-        <el-form-item size="mini" label="序号">
-          <el-input v-model="menu.sort" placeholder="序号" />
-        </el-form-item>
-        <el-form-item size="mini" label="菜单状态">
-          <el-select v-model="menu.status" size="mini" style="width: 100%;" placeholder="菜单状态">
-            <el-option label="禁用" value="禁用" />
-            <el-option label="启用" value="启用" />
-          </el-select>
-        </el-form-item>
-        <el-form-item size="mini" label="菜单类型">
-          <el-select v-model="menu.directory" size="mini" style="width: 100%;" placeholder="菜单类型">
-            <el-option label="目录" value="目录" />
-            <el-option label="页面" value="页面" />
-          </el-select>
+        <el-form-item prop="password" size="mini" label="密码">
+          <el-input v-model="user.password" type="password" placeholder="密码" />
         </el-form-item>
       </el-form>
       <span slot="footer" style="text-align: right;">
@@ -236,7 +206,7 @@
 import './_Users.scss'
 import '@/assets/styles/public.scss'
 import { mapGetters } from 'vuex'
-import { getUsers, getSelect, addMenu, updateMenu, deleteUser } from '@/api/module/common'
+import { getUsers, getSelect, CreateUser, updateMenu, deleteUser } from '@/api/module/common'
 import { Message, MessageBox } from 'element-ui'
 export default {
   name: 'Users',
@@ -257,16 +227,10 @@ export default {
         sortType: 1
       },
       tableMaxHeight: 500,
-      menu: {
-        id: '',
-        parentId: '',
-        name: '',
-        permission: '',
-        sort: '',
-        status: '',
-        directory: '',
-        title: '',
-        path: ''
+      user: {
+        username: '',
+        nickname: '',
+        password: ''
       },
       total: 0,
       update: {},
@@ -276,8 +240,14 @@ export default {
       searchShow: false,
       options: [],
       rules: {
-        name: [
-          { required: true, message: '不能为空', trigger: 'blur' }
+        username: [
+          { required: true, message: '用户名不能为空', trigger: 'blur' }
+        ],
+        nickname: [
+          { required: true, message: '昵称不能为空', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '密码不能为空', trigger: 'blur' }
         ]
       }
     }
@@ -334,16 +304,11 @@ export default {
         }
       } else if (type === 'create') {
         this.show = false
-        this.menu = {
+        this.user = {
           id: '',
-          parentId: '',
-          name: '',
-          permission: '',
-          sort: '',
-          status: '',
-          directory: '',
-          title: '',
-          path: ''
+          username: '',
+          nickname: '',
+          password: ''
         }
       }
     },
@@ -380,7 +345,7 @@ export default {
           return false
         } else {
           new Promise((resolve, reject) => {
-            addMenu(this.menu).then(res => {
+            CreateUser(this.user).then(res => {
               if (res) {
                 this.setTable()
                 Message({
