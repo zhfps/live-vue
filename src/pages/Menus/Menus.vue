@@ -243,9 +243,7 @@ export default {
     handleCancle(type) {
       if (type === 'update') {
         this.updateShow = false
-        this.update = {
-          id: 0
-        }
+        this.update = { }
       } else if (type === 'create') {
         this.show = false
         this.menu = {
@@ -311,19 +309,27 @@ export default {
         if (!valid) {
           return false
         } else {
-          new Promise((resolve, reject) => {
-            addMenu(this.menu).then(res => {
-              if (res) {
-                this.setTable()
-                Message({
-                  type: 'success',
-                  message: '新增成功',
-                  showClose: true
-                })
-                this.show = false
-                resolve(res)
+          addMenu(this.menu).then(res => {
+            if (res) {
+              this.setTable()
+              Message({
+                type: 'success',
+                message: '新增成功',
+                showClose: true
+              })
+              this.menu = {
+                id: '',
+                parentId: '',
+                name: '',
+                permission: '',
+                sort: '',
+                status: '',
+                directory: '',
+                title: '',
+                path: ''
               }
-            }).catch(err => reject(err))
+              this.show = false
+            }
           })
         }
       })
@@ -333,19 +339,17 @@ export default {
         if (!valid) {
           return false
         } else {
-          new Promise((resolve, reject) => {
-            updateMenu(this.update).then(res => {
-              if (res) {
-                this.setTable()
-                Message({
-                  type: 'success',
-                  message: '修改成功',
-                  showClose: true
-                })
-                this.updateShow = false
-                resolve(res)
-              }
-            }).catch(err => reject(err))
+          updateMenu(this.update).then(res => {
+            if (res) {
+              this.setTable()
+              Message({
+                type: 'success',
+                message: '修改成功',
+                showClose: true
+              })
+              this.updateShow = false
+              this.update = {}
+            }
           })
         }
       })
@@ -357,9 +361,10 @@ export default {
             if (res) {
               Message({
                 type: 'success',
-                message: '删除',
+                message: '删除成功',
                 showClose: true
               })
+              this.update = {}
               this.setTable()
             }
           })
@@ -373,19 +378,13 @@ export default {
       }
     },
     setTable() {
-      new Promise((resolve, reject) => {
-        getTable(this.query).then(res => {
-          this.tableData = res
-          resolve(res)
-        }).catch(err => reject(err))
+      getTable(this.query).then(res => {
+        this.tableData = res
       })
     },
     setSelect() {
-      new Promise((resolve, reject) => {
-        getSelect().then(res => {
-          this.options = res
-          resolve(res)
-        }).catch(err => reject(err))
+      getSelect().then(res => {
+        this.options = res
       })
     }
   }
