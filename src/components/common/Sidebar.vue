@@ -67,7 +67,7 @@ export default {
     return {
       items: [
         {
-          icon: 'el-icon-lx-home',
+          icon: 'el-icon-house',
           index: 'dashboard',
           title: '系统首页'
         }, {
@@ -84,6 +84,10 @@ export default {
               icon: 'el-icon-user',
               index: 'users',
               title: '用户管理'
+            }, {
+              icon: 'el-icon-connection',
+              index: 'permissions',
+              title: '权限管理'
             }
           ]
         },

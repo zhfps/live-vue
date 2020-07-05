@@ -155,44 +155,14 @@
       width="400px"
     >
       <el-form ref="updateForm" label-width="80px" :rules="rules" :model="update" style="padding-right: 15px;">
-        <el-form-item size="mini" label="父节点">
-          <el-cascader
-            v-model="update.parentId"
-            style="width: 100%;"
-            :options="options"
-            :props="{ checkStrictly: true, emitPath: false}"
-            clearable
-          />
+        <el-form-item prop="username" size="mini" label="用户名">
+          <el-input v-model="update.username" placeholder="用户名" />
         </el-form-item>
-        <el-form-item size="mini" label="菜单名称">
-          <el-input v-model="update.title" placeholder="菜单名称" />
+        <el-form-item prop="nickname" size="mini" label="昵称">
+          <el-input v-model="update.nickname" placeholder="昵称" />
         </el-form-item>
-        <el-form-item size="mini" label="路径">
-          <el-input v-model="update.path" placeholder="路径" />
-        </el-form-item>
-        <el-form-item prop="name" size="mini" label="组件名称">
-          <el-input v-model="update.name" placeholder="前端页面名称" />
-        </el-form-item>
-        <el-form-item size="mini" label="图标">
-          <el-input v-model="update.icon" placeholder="图标" />
-        </el-form-item>
-        <el-form-item size="mini" label="权限标识">
-          <el-input v-model="update.permission" placeholder="权限标识" />
-        </el-form-item>
-        <el-form-item size="mini" label="序号">
-          <el-input v-model="update.sort" placeholder="序号" />
-        </el-form-item>
-        <el-form-item size="mini" label="菜单状态">
-          <el-select v-model="update.status" size="mini" style="width: 100%;" placeholder="菜单状态">
-            <el-option label="禁用" value="禁用" />
-            <el-option label="启用" value="启用" />
-          </el-select>
-        </el-form-item>
-        <el-form-item size="mini" label="菜单类型">
-          <el-select v-model="update.directory" size="mini" style="width: 100%;" placeholder="菜单类型">
-            <el-option label="目录" value="目录" />
-            <el-option label="页面" value="页面" />
-          </el-select>
+        <el-form-item prop="password" size="mini" label="密码">
+          <el-input v-model="update.password" type="password" placeholder="密码" />
         </el-form-item>
       </el-form>
       <span slot="footer" style="text-align: right;">
@@ -206,7 +176,7 @@
 import './_Users.scss'
 import '@/assets/styles/public.scss'
 import { mapGetters } from 'vuex'
-import { getUsers, getSelect, CreateUser, updateMenu, deleteUser } from '@/api/module/common'
+import { getUsers, CreateUser, UpdateUser, deleteUser } from '@/api/module/common'
 import { Message, MessageBox } from 'element-ui'
 export default {
   name: 'Users',
@@ -263,7 +233,6 @@ export default {
   },
   created() {
     this.setTable()
-    this.setSelect()
   },
   mounted() {
     this.$nextTick(() => {
@@ -305,7 +274,6 @@ export default {
       } else if (type === 'create') {
         this.show = false
         this.user = {
-          id: '',
           username: '',
           nickname: '',
           password: ''
@@ -367,7 +335,7 @@ export default {
           return false
         } else {
           new Promise((resolve, reject) => {
-            updateMenu(this.update).then(res => {
+            UpdateUser(this.update).then(res => {
               if (res) {
                 this.setTable()
                 Message({
@@ -411,14 +379,6 @@ export default {
         this.tableData = list
         this.total = total
         return res
-      })
-    },
-    setSelect() {
-      new Promise((resolve, reject) => {
-        getSelect().then(res => {
-          this.options = res
-          resolve(res)
-        }).catch(err => reject(err))
       })
     }
   }

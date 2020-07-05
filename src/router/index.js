@@ -28,6 +28,10 @@ export default new Router({
           path: '/users',
           component: () => import('@/pages/Users/Users'),
           meta: { title: '用户管理' }
+        }, {
+          path: '/permissions',
+          component: () => import('@/pages/Permission/Permission'),
+          meta: { title: '权限管理' }
         },
         {
           path: '/icon',

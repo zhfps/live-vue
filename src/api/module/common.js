@@ -52,6 +52,13 @@ export function CreateUser(data) {
     data
   })
 }
+export function UpdateUser(data) {
+  return request({
+    url: '/user/update',
+    method: 'post',
+    data
+  })
+}
 export function deleteUser(id) {
   return request({
     url: '/user/delete',
@@ -59,5 +66,42 @@ export function deleteUser(id) {
     params: {
       id
     }
+  })
+}
+// 权限模块
+export function getPermissions(params) {
+  return request({
+    url: '/permission/getTree',
+    method: 'get',
+    params
+  })
+}
+export function createPermissions(data) {
+  return request({
+    url: '/permission/insert',
+    method: 'post',
+    data
+  })
+}
+export function permissionsSelect() {
+  return request({
+    url: '/permission/getSelect',
+    method: 'get'
+  })
+}
+export function deletePermissions(id) {
+  return request({
+    url: '/permission/delete',
+    method: 'delete',
+    params: {
+      id
+    }
+  })
+}
+export function updatePermission(data) {
+  return request({
+    url: '/permission/update',
+    method: 'post',
+    data
   })
 }
