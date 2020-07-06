@@ -105,3 +105,20 @@ export function updatePermission(data) {
     data
   })
 }
+// 角色相关
+export function getRoles(params) {
+  return request({
+    url: '/sysRole/queryPage',
+    method: 'get',
+    params
+  })
+}
+export function deleteRole(id) {
+  return request({
+    url: '/sysRole/delete',
+    method: 'delete',
+    params: {
+      id
+    }
+  })
+}

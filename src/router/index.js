@@ -32,6 +32,10 @@ export default new Router({
           path: '/permissions',
           component: () => import('@/pages/Permission/Permission'),
           meta: { title: '权限管理' }
+        }, {
+          path: '/roles',
+          component: () => import('@/pages/Roles/Roles'),
+          meta: { title: '角色管理' }
         },
         {
           path: '/icon',

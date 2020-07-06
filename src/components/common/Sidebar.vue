@@ -88,6 +88,10 @@ export default {
               icon: 'el-icon-connection',
               index: 'permissions',
               title: '权限管理'
+            }, {
+              icon: 'el-icon-connection',
+              index: 'roles',
+              title: '角色管理'
             }
           ]
         },
