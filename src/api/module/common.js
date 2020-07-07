@@ -113,6 +113,20 @@ export function getRoles(params) {
     params
   })
 }
+export function CreateRole(data) {
+  return request({
+    url: '/sysRole/insert',
+    method: 'post',
+    data
+  })
+}
+export function UpdateRole(data) {
+  return request({
+    url: '/sysRole/update',
+    method: 'post',
+    data
+  })
+}
 export function deleteRole(id) {
   return request({
     url: '/sysRole/delete',

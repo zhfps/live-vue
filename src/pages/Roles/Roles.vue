@@ -1,5 +1,5 @@
 <template>
-  <div class="Users">
+  <div class="Roles">
     <el-card v-show="searchShow" class="tool-card">
       <el-form class="search" label-width="80px" :inline="true" :model="query">
         <el-form-item size="mini" label="权限描述">
@@ -71,15 +71,12 @@
       :visible.sync="show"
       width="400px"
     >
-      <el-form ref="menuForm" label-width="80px" :rules="rules" :model="user" style="padding-right: 15px;">
-        <el-form-item prop="username" size="mini" label="用户名">
-          <el-input v-model="user.username" placeholder="用户名" />
+      <el-form ref="menuForm" label-width="80px" :rules="rules" :model="role" style="padding-right: 15px;">
+        <el-form-item prop="name" size="mini" label="用户名">
+          <el-input v-model="role.name" placeholder="角色编号" />
         </el-form-item>
-        <el-form-item prop="nickname" size="mini" label="昵称">
-          <el-input v-model="user.nickname" placeholder="昵称" />
-        </el-form-item>
-        <el-form-item prop="password" size="mini" label="密码">
-          <el-input v-model="user.password" type="password" placeholder="密码" />
+        <el-form-item prop="description" size="mini" label="角色描述">
+          <el-input v-model="role.description" placeholder="角色描述" />
         </el-form-item>
       </el-form>
       <span slot="footer" style="text-align: right;">
@@ -95,14 +92,8 @@
       width="400px"
     >
       <el-form ref="updateForm" label-width="80px" :rules="rules" :model="update" style="padding-right: 15px;">
-        <el-form-item prop="username" size="mini" label="用户名">
-          <el-input v-model="update.username" placeholder="用户名" />
-        </el-form-item>
-        <el-form-item prop="nickname" size="mini" label="昵称">
-          <el-input v-model="update.nickname" placeholder="昵称" />
-        </el-form-item>
-        <el-form-item prop="password" size="mini" label="密码">
-          <el-input v-model="update.password" type="password" placeholder="密码" />
+        <el-form-item prop="description" size="mini" label="角色描述">
+          <el-input v-model="update.description" placeholder="角色描述" />
         </el-form-item>
       </el-form>
       <span slot="footer" style="text-align: right;">
@@ -116,7 +107,7 @@
 import './_Roles.scss'
 import '@/assets/styles/public.scss'
 import { mapGetters } from 'vuex'
-import { getRoles, CreateUser, UpdateUser, deleteRole } from '@/api/module/common'
+import { getRoles, CreateRole, UpdateRole, deleteRole } from '@/api/module/common'
 import { Message, MessageBox } from 'element-ui'
 export default {
   name: 'Roles',
@@ -136,10 +127,9 @@ export default {
         sortType: 1
       },
       tableMaxHeight: 500,
-      user: {
-        username: '',
-        nickname: '',
-        password: ''
+      role: {
+        name: '',
+        description: ''
       },
       total: 0,
       update: {},
@@ -149,14 +139,11 @@ export default {
       searchShow: false,
       options: [],
       rules: {
-        username: [
-          { required: true, message: '用户名不能为空', trigger: 'blur' }
+        name: [
+          { required: true, message: '角色不能为空', trigger: 'blur' }
         ],
-        nickname: [
-          { required: true, message: '昵称不能为空', trigger: 'blur' }
-        ],
-        password: [
-          { required: true, message: '密码不能为空', trigger: 'blur' }
+        description: [
+          { required: true, message: '角色描述不能为空', trigger: 'blur' }
         ]
       }
     }
@@ -211,9 +198,8 @@ export default {
       } else if (type === 'create') {
         this.show = false
         this.user = {
-          username: '',
-          nickname: '',
-          password: ''
+          name: '',
+          description: ''
         }
       }
     },
@@ -248,19 +234,20 @@ export default {
         if (!valid) {
           return false
         } else {
-          new Promise((resolve, reject) => {
-            CreateUser(this.user).then(res => {
-              if (res) {
-                this.setTable()
-                Message({
-                  type: 'success',
-                  message: '新增成功',
-                  showClose: true
-                })
-                this.show = false
-                resolve(res)
+          CreateRole(this.role).then(res => {
+            if (res) {
+              this.setTable()
+              Message({
+                type: 'success',
+                message: '新增成功',
+                showClose: true
+              })
+              this.user = {
+                name: '',
+                description: ''
               }
-            }).catch(err => reject(err))
+              this.show = false
+            }
           })
         }
       })
@@ -270,7 +257,7 @@ export default {
         if (!valid) {
           return false
         } else {
-          UpdateUser(this.update).then(res => {
+          UpdateRole(this.update).then(res => {
             if (res) {
               this.setTable()
               Message({
@@ -278,6 +265,7 @@ export default {
                 message: '修改成功',
                 showClose: true
               })
+              this.update = {}
               this.updateShow = false
             }
           })
