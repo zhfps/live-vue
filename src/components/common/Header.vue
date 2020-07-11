@@ -67,13 +67,14 @@ export default {
   },
   methods: {
     ...mapActions({
-      changCollapse: 'config/changCollapse'
+      changCollapse: 'config/changCollapse',
+      logout: 'userInfo/LogOut'
     }
     ),
     // 用户名下拉菜单选择事件
     handleCommand(command) {
       if (command === 'loginout') {
-        localStorage.removeItem('ms_username')
+        this.logout()
         this.$router.push('/login')
       }
     },

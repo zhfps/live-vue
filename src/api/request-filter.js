@@ -1,5 +1,5 @@
 import axios from 'axios'
-import router from '@/router'
+// import router from '@/router'
 import { Loading, Notification } from 'element-ui'
 import state from '@/state'
 import { getCache } from '@/plugin/cache'
@@ -39,7 +39,13 @@ service.interceptors.response.use(
     if (code === 200) {
       return data
     } else if (code === 403) {
-      router.push('/login')
+      Notification({
+        message: response.data.msg,
+        type: 'error',
+        position: 'bottom-right',
+        duration: 3 * 1000
+      })
+      // router.push('/login')
     } else {
       Notification({
         message: response.data.msg,
@@ -51,7 +57,7 @@ service.interceptors.response.use(
   },
   error => {
     loading.close()
-    router.push('/login')
+    // router.push('/login')
     Notification({
       message: error.message,
       type: 'error',

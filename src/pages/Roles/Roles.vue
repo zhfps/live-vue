@@ -18,6 +18,7 @@
         <el-button type="primary" size="mini" @click="show =!show">新增</el-button>
         <el-button type="warning" size="mini" @click="handleUpdateDialog">修改</el-button>
         <el-button type="danger" size="mini" @click="handleDelete">删除</el-button>
+        <el-button type="primary" size="mini">权限分配</el-button>
         <el-button-group style="float: right;">
           <el-button type="primary" icon="el-icon-search" size="mini" @click="searchShow = !searchShow" />
           <el-button type="primary" icon="el-icon-refresh" size="mini" @click="handleRefresh" />
