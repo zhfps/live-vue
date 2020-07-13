@@ -18,7 +18,7 @@
         <el-button type="primary" size="mini" @click="show =!show">新增</el-button>
         <el-button type="warning" size="mini" @click="handleUpdateDialog">修改</el-button>
         <el-button type="danger" size="mini" @click="handleDelete">删除</el-button>
-        <el-button type="primary" size="mini">权限分配</el-button>
+        <el-button type="primary" size="mini" @click="handlePermission">权限分配</el-button>
         <el-button-group style="float: right;">
           <el-button type="primary" icon="el-icon-search" size="mini" @click="searchShow = !searchShow" />
           <el-button type="primary" icon="el-icon-refresh" size="mini" @click="handleRefresh" />
@@ -102,13 +102,33 @@
         <el-button size="mini" @click="handleCancle('update')">取消</el-button>
       </span>
     </el-dialog>
+    <!--权限分配-->
+    <el-dialog
+      v-dialog-drag
+      title="权限分配"
+      :visible.sync="permission"
+      width="400px"
+    >
+      <el-tree
+        :data="permissions"
+        show-checkbox
+        node-key="value"
+        :props="defaultProps"
+        :default-checked-keys="setPermissions"
+        @check="handleSelectNode"
+      />
+      <span slot="footer" style="text-align: right;">
+        <el-button type="primary" size="mini" @click="permission = false">确定</el-button>
+        <el-button size="mini" @click="permission = false">取消</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
 import './_Roles.scss'
 import '@/assets/styles/public.scss'
 import { mapGetters } from 'vuex'
-import { getRoles, CreateRole, UpdateRole, deleteRole } from '@/api/module/common'
+import { getRoles, CreateRole, UpdateRole, deleteRole, permissionsSelect } from '@/api/module/common'
 import { Message, MessageBox } from 'element-ui'
 export default {
   name: 'Roles',
@@ -120,6 +140,11 @@ export default {
   },
   data() {
     return {
+      permissions: [],
+      defaultProps: {
+        children: 'children',
+        label: 'label'
+      },
       query: {
         description: null,
         currentPage: 1,
@@ -138,6 +163,7 @@ export default {
       updateShow: false,
       tableData: [],
       searchShow: false,
+      permission: false,
       options: [],
       rules: {
         name: [
@@ -146,7 +172,8 @@ export default {
         description: [
           { required: true, message: '角色描述不能为空', trigger: 'blur' }
         ]
-      }
+      },
+      setPermissions: []
     }
   },
   watch: {
@@ -160,6 +187,7 @@ export default {
   },
   created() {
     this.setTable()
+    this.setSelect()
   },
   mounted() {
     this.$nextTick(() => {
@@ -171,6 +199,25 @@ export default {
     }
   },
   methods: {
+    setSelect() {
+      permissionsSelect(2).then(res => {
+        this.permissions = res
+      })
+    },
+    handleSelectNode(Nodes, Keys) {
+      this.setPermissions = Keys.checkedKeys
+    },
+    handlePermission() {
+      if (Object.keys(this.update).length > 0) {
+        this.permission = true
+      } else {
+        Message({
+          type: 'info',
+          message: '请选择数据',
+          showClose: true
+        })
+      }
+    },
     handleSortChange(data) {
       if (data.order === 'ascending') {
         this.query.sortType = 2

@@ -272,7 +272,7 @@ export default {
       })
     },
     setSelect() {
-      permissionsSelect().then(res => {
+      permissionsSelect(1).then(res => {
         this.options = res
       })
     }

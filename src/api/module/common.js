@@ -83,10 +83,13 @@ export function createPermissions(data) {
     data
   })
 }
-export function permissionsSelect() {
+export function permissionsSelect(type) {
   return request({
     url: '/permission/getSelect',
-    method: 'get'
+    method: 'get',
+    params: {
+      type
+    }
   })
 }
 export function deletePermissions(id) {
