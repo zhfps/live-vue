@@ -139,3 +139,25 @@ export function deleteRole(id) {
     }
   })
 }
+
+// 权限和角色
+
+export function getRolePermission(id) {
+  return request({
+    url: '/permission/getRolePermission',
+    method: 'get',
+    params: {
+      id
+    }
+  })
+}
+export function setRolePermission(roleId, data) {
+  return request({
+    url: '/permission/setRolePermission',
+    method: 'post',
+    params: {
+      roleId
+    },
+    data
+  })
+}

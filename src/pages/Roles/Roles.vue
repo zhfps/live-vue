@@ -110,6 +110,7 @@
       width="400px"
     >
       <el-tree
+        ref="tree"
         :data="permissions"
         show-checkbox
         node-key="value"
@@ -118,7 +119,7 @@
         @check="handleSelectNode"
       />
       <span slot="footer" style="text-align: right;">
-        <el-button type="primary" size="mini" @click="permission = false">确定</el-button>
+        <el-button type="primary" size="mini" @click="handleSetPermissions">确定</el-button>
         <el-button size="mini" @click="permission = false">取消</el-button>
       </span>
     </el-dialog>
@@ -128,7 +129,7 @@
 import './_Roles.scss'
 import '@/assets/styles/public.scss'
 import { mapGetters } from 'vuex'
-import { getRoles, CreateRole, UpdateRole, deleteRole, permissionsSelect } from '@/api/module/common'
+import { getRoles, CreateRole, UpdateRole, deleteRole, permissionsSelect, getRolePermission, setRolePermission } from '@/api/module/common'
 import { Message, MessageBox } from 'element-ui'
 export default {
   name: 'Roles',
@@ -199,6 +200,27 @@ export default {
     }
   },
   methods: {
+    handleSetPermissions() {
+      setRolePermission(this.update.id, this.setPermissions).then(res => {
+        if (res) {
+          this.setPermissions = []
+          this.permission = false
+        }
+      })
+    },
+    handleGetRolePermission() {
+      this.setPermissions = []
+      getRolePermission(this.update.id).then(res => {
+        for (const item of res) {
+          this.setPermissions.push(item.permissionId)
+        }
+        this.$nextTick(() => {
+          this.$refs.tree.setCheckedKeys(this.setPermissions)
+        })
+        this.permission = true
+        return res
+      })
+    },
     setSelect() {
       permissionsSelect(2).then(res => {
         this.permissions = res
@@ -209,7 +231,7 @@ export default {
     },
     handlePermission() {
       if (Object.keys(this.update).length > 0) {
-        this.permission = true
+        this.handleGetRolePermission()
       } else {
         Message({
           type: 'info',
