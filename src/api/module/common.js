@@ -151,6 +151,15 @@ export function getRolePermission(id) {
     }
   })
 }
+export function getUserRoles(id) {
+  return request({
+    url: '/role/getUserRole',
+    method: 'get',
+    params: {
+      id
+    }
+  })
+}
 export function setRolePermission(roleId, data) {
   return request({
     url: '/permission/setRolePermission',
@@ -159,5 +168,22 @@ export function setRolePermission(roleId, data) {
       roleId
     },
     data
+  })
+}
+export function setUserRole(userId, data) {
+  return request({
+    url: '/role/setUserRole',
+    method: 'post',
+    params: {
+      userId
+    },
+    data
+  })
+}
+
+export function getAllRoles() {
+  return request({
+    url: '/sysRole/queryAll',
+    method: 'get'
   })
 }

@@ -25,6 +25,7 @@
         <el-button type="primary" size="mini" @click="show =!show">新增</el-button>
         <el-button type="warning" size="mini" @click="handleUpdateDialog">修改</el-button>
         <el-button type="danger" size="mini" @click="handleDelete">删除</el-button>
+        <el-button type="primary" size="mini" @click="handleRole">角色分配</el-button>
         <el-button-group style="float: right;">
           <el-button type="primary" icon="el-icon-search" size="mini" @click="searchShow = !searchShow" />
           <el-button type="primary" icon="el-icon-refresh" size="mini" @click="handleRefresh" />
@@ -170,13 +171,42 @@
         <el-button size="mini" @click="handleCancle('update')">取消</el-button>
       </span>
     </el-dialog>
+    <!--分配角色-->
+    <el-dialog
+      v-dialog-drag
+      title="分配角色"
+      :visible.sync="roleShow"
+      width="400px"
+    >
+      <el-tree
+        ref="tree"
+        :data="roles"
+        show-checkbox
+        node-key="id"
+        :props="defaultProps"
+        :default-checked-keys="setRoles"
+        @check="handleSelectNode"
+      />
+      <span slot="footer" style="text-align: right;">
+        <el-button type="primary" size="mini" @click="handleSetRole">确定</el-button>
+        <el-button size="mini" @click="roleShow = false">取消</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
 import './_Users.scss'
 import '@/assets/styles/public.scss'
 import { mapGetters } from 'vuex'
-import { getUsers, CreateUser, UpdateUser, deleteUser } from '@/api/module/common'
+import {
+  getUsers,
+  CreateUser,
+  UpdateUser,
+  deleteUser,
+  getUserRoles,
+  setUserRole,
+  getAllRoles
+} from '@/api/module/common'
 import { Message, MessageBox } from 'element-ui'
 export default {
   name: 'Users',
@@ -188,6 +218,13 @@ export default {
   },
   data() {
     return {
+      roleShow: false,
+      roles: [],
+      setRoles: [],
+      defaultProps: {
+        children: 'children',
+        label: 'description'
+      },
       query: {
         userName: null,
         status: '全部',
@@ -233,6 +270,7 @@ export default {
   },
   created() {
     this.setTable()
+    this.handleGetAllRoles()
   },
   mounted() {
     this.$nextTick(() => {
@@ -244,6 +282,46 @@ export default {
     }
   },
   methods: {
+    handleGetAllRoles() {
+      getAllRoles().then(res => {
+        this.roles = res
+      })
+    },
+    handleSetRole() {
+      setUserRole(this.update.id, this.setRoles).then(res => {
+        if (res) {
+          this.setRoles = []
+          this.roleShow = false
+        }
+      })
+    },
+    handleRole() {
+      if (Object.keys(this.update).length > 0) {
+        this.handleGetRoles()
+      } else {
+        Message({
+          type: 'info',
+          message: '请选择数据',
+          showClose: true
+        })
+      }
+    },
+    handleGetRoles() {
+      this.setRoles = []
+      getUserRoles(this.update.id).then(res => {
+        for (const item of res) {
+          this.setRoles.push(item.userId)
+        }
+        this.$nextTick(() => {
+          this.$refs.tree.setCheckedKeys(this.setRoles)
+        })
+        this.roleShow = true
+        return res
+      })
+    },
+    handleSelectNode(Nodes, Keys) {
+      this.setRoles = Keys.checkedKeys
+    },
     handleSortChange(data) {
       if (data.order === 'ascending') {
         this.query.sortType = 2
