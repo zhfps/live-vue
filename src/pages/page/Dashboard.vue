@@ -4,7 +4,7 @@
       <el-col :span="8">
         <el-card v-if="UserInfo.nickname" shadow="hover" class="mgb20" style="height:252px;">
           <div class="user-info">
-            <img :src="'http://localhost:8080'+UserInfo.icon" class="user-avator" alt>
+            <el-avatar :size="120" :src="'http://localhost:8080'+UserInfo.icon" />
             <div class="user-info-cont">
               <div class="user-info-name">{{ UserInfo.name }}</div>
               <div>{{ UserInfo.nickname }}</div>

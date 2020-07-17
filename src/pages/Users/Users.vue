@@ -162,9 +162,9 @@
         <el-form-item prop="nickname" size="mini" label="昵称">
           <el-input v-model="update.nickname" placeholder="昵称" />
         </el-form-item>
-        <el-form-item prop="password" size="mini" label="密码">
-          <el-input v-model="update.password" type="password" placeholder="密码" />
-        </el-form-item>
+<!--        <el-form-item prop="password" size="mini" label="密码">-->
+<!--          <el-input v-model="update.password" type="password" placeholder="密码" />-->
+<!--        </el-form-item>-->
       </el-form>
       <span slot="footer" style="text-align: right;">
         <el-button type="primary" size="mini" @click="handleUpdate('updateForm')">确定</el-button>
