@@ -3,11 +3,15 @@ import { getCache, setCache, deleteCache } from '@/plugin/cache'
 
 const state = {
   Access_Token: getCache('token', 'text'),
-  UserInfo: getCache('user', 'object')
+  UserInfo: getCache('user', 'object'),
+  Permissions: getCache('permissions', 'object')
 }
 const mutations = {
   SET_USER_INFO: (sate, userInfo) => {
     state.UserInfo = Object.assign({}, userInfo)
+  },
+  SET_PERMISSIONS: (sate, permissions) => {
+    state.UserInfo = Object.assign({}, Permissions)
   },
   SET_ACCESS_TOKEN: (state, token) => {
     const { Access_Token } = state
@@ -16,7 +20,7 @@ const mutations = {
   LOGOUT: (state) => {
     deleteCache('user')
     deleteCache('token')
-    Object.assign(state, { Access_Token: '', UserInfo: '' })
+    Object.assign(state, { Access_Token: '', UserInfo: '', Permissions: '' })
   }
 }
 const actions = {
@@ -30,8 +34,11 @@ const actions = {
   GetUserInfo({ commit }) {
     return getUserInfo().then(res => {
       const { user } = res.principal
+      const { authorities } = res
       commit('SET_USER_INFO', user)
+      commit('SET_PERMISSIONS', authorities)
       setCache('user', user, 'object')
+      setCache('permissions', authorities, 'object')
     })
   },
   LogOut({ commit }) {

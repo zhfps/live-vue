@@ -4,6 +4,7 @@ const getters = {
   tagsList: state => state.config.tagsList,
   rootPath: state => state.config.rootPath,
   pageSizeList: state => state.config.pageSizeList,
-  UserInfo: state => state.userInfo.UserInfo
+  UserInfo: state => state.userInfo.UserInfo,
+  Permissions: state => state.userInfo.Permissions
 }
 export default getters
