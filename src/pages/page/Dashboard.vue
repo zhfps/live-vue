@@ -223,20 +223,6 @@ export default {
         item.name = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
       })
     }
-    // handleListener() {
-    //     bus.$on('collapse', this.handleBus);
-    //     // 调用renderChart方法对图表进行重新渲染
-    //     window.addEventListener('resize', this.renderChart);
-    // },
-    // handleBus(msg) {
-    //     setTimeout(() => {
-    //         this.renderChart();
-    //     }, 200);
-    // },
-    // renderChart() {
-    //     this.$refs.bar.renderChart();
-    //     this.$refs.line.renderChart();
-    // }
   }
 }
 </script>

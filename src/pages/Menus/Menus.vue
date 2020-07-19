@@ -82,11 +82,6 @@
             label="类型"
             width="160"
           />
-          <el-table-column
-            prop="permission"
-            label="权限标识"
-            width="300"
-          />
         </el-table>
       </div>
     </el-card>
@@ -118,9 +113,6 @@
         </el-form-item>
         <el-form-item size="mini" label="图标">
           <el-input v-model="menu.icon" placeholder="图标" />
-        </el-form-item>
-        <el-form-item size="mini" label="权限标识">
-          <el-input v-model="menu.permission" placeholder="权限标识" />
         </el-form-item>
         <el-form-item size="mini" label="序号">
           <el-input v-model="menu.sort" placeholder="序号" />
@@ -172,9 +164,6 @@
         <el-form-item size="mini" label="图标">
           <el-input v-model="update.icon" placeholder="图标" />
         </el-form-item>
-        <el-form-item size="mini" label="权限标识">
-          <el-input v-model="update.permission" placeholder="权限标识" />
-        </el-form-item>
         <el-form-item size="mini" label="序号">
           <el-input v-model="update.sort" placeholder="序号" />
         </el-form-item>
@@ -215,7 +204,6 @@ export default {
         id: '',
         parentId: '',
         name: '',
-        permission: '',
         sort: '',
         status: '',
         directory: '',
@@ -250,7 +238,6 @@ export default {
           id: '',
           parentId: '',
           name: '',
-          permission: '',
           sort: '',
           status: '',
           directory: '',
@@ -284,7 +271,6 @@ export default {
           path }) => ({ id,
           parentId,
           name,
-          permission,
           sort,
           status,
           directory,
@@ -321,7 +307,6 @@ export default {
                 id: '',
                 parentId: '',
                 name: '',
-                permission: '',
                 sort: '',
                 status: '',
                 directory: '',
