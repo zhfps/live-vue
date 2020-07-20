@@ -4,9 +4,13 @@ import { getCache, setCache, deleteCache } from '@/plugin/cache'
 const state = {
   Access_Token: getCache('token', 'text'),
   UserInfo: getCache('user', 'object'),
-  Permissions: getCache('permissions', 'object')
+  Permissions: getCache('permissions', 'object'),
+  Menus: getCache('menu', 'object')
 }
 const mutations = {
+  STE_MENUS: (sate, menus) => {
+    state.Menus = Object.assign({}, menus)
+  },
   SET_USER_INFO: (sate, userInfo) => {
     state.UserInfo = Object.assign({}, userInfo)
   },
@@ -33,12 +37,14 @@ const actions = {
   },
   GetUserInfo({ commit }) {
     return getUserInfo().then(res => {
-      const { user } = res.principal
+      const { user, menu } = res.principal
       const { authorities } = res
       commit('SET_USER_INFO', user)
       commit('SET_PERMISSIONS', authorities)
+      commit('STE_MENUS', menu)
       setCache('user', user, 'object')
       setCache('permissions', authorities, 'object')
+      setCache('menu', menu, 'object')
     })
   },
   LogOut({ commit }) {
