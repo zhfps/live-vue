@@ -96,6 +96,7 @@ export default {
   name: 'Dashboard',
   data() {
     return {
+      icon: '',
       name: localStorage.getItem('ms_username'),
       todoList: [
         {

@@ -5,6 +5,7 @@ import router from './router'
 import ElementUI from 'element-ui'
 import SvgIcon from 'vue-svgicon'
 import VueI18n from 'vue-i18n'
+import iconPicker from 'vue-fontawesome-elementui-icon-picker'
 import { messages } from '@/plugin/i18n'
 import '@/router/permission'
 import '@/icons/svg/index'
@@ -20,6 +21,7 @@ Vue.use(ElementUI)
 Vue.use(SvgIcon, {
   tagName: 'svg-icon'
 })
+Vue.use(iconPicker)
 const i18n = new VueI18n({
   locale: 'zh',
   messages

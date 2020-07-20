@@ -54,12 +54,13 @@
             width="180"
           >
             <template slot-scope="{row}">
-              <svg-icon
-                class="pre-icon"
-                :name="row.meta.icon"
-                width="18"
-                height="18"
-              />
+<!--              <svg-icon-->
+<!--                class="pre-icon"-->
+<!--                :name="row.meta.icon"-->
+<!--                width="18"-->
+<!--                height="18"-->
+<!--              />-->
+              <i :class="row.meta.icon"></i>
             </template>
           </el-table-column>
           <el-table-column
@@ -112,7 +113,7 @@
           <el-input v-model="menu.name" placeholder="前端页面名称" />
         </el-form-item>
         <el-form-item size="mini" label="图标">
-          <el-input v-model="menu.icon" placeholder="图标" />
+          <icon-picker v-model="update.icon"></icon-picker>
         </el-form-item>
         <el-form-item size="mini" label="序号">
           <el-input v-model="menu.sort" placeholder="序号" />
@@ -162,7 +163,7 @@
           <el-input v-model="update.name" placeholder="前端页面名称" />
         </el-form-item>
         <el-form-item size="mini" label="图标">
-          <el-input v-model="update.icon" placeholder="图标" />
+          <icon-picker v-model="update.icon"></icon-picker>
         </el-form-item>
         <el-form-item size="mini" label="序号">
           <el-input v-model="update.sort" placeholder="序号" />
@@ -204,9 +205,9 @@ export default {
         id: '',
         parentId: '',
         name: '',
-        sort: '',
-        status: '',
-        directory: '',
+        sort: '5',
+        status: '启用',
+        directory: '页面',
         title: '',
         path: ''
       },
@@ -239,8 +240,8 @@ export default {
           parentId: '',
           name: '',
           sort: '',
-          status: '',
-          directory: '',
+          status: '启用',
+          directory: '页面',
           title: '',
           path: ''
         }
@@ -264,7 +265,6 @@ export default {
         this.update = (({ id,
           parentId,
           name,
-          permission,
           sort,
           status,
           directory,
@@ -308,8 +308,8 @@ export default {
                 parentId: '',
                 name: '',
                 sort: '',
-                status: '',
-                directory: '',
+                status: '启用',
+                directory: '页面',
                 title: '',
                 path: ''
               }
