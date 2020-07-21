@@ -26,6 +26,7 @@
         <el-button type="warning" size="mini" @click="handleUpdateDialog">修改</el-button>
         <el-button type="danger" size="mini" @click="handleDelete">删除</el-button>
         <el-button type="primary" size="mini" @click="handleRole">角色分配</el-button>
+        <el-button type="primary" size="mini" @click="handleMenu">菜单分配</el-button>
         <el-button-group style="float: right;">
           <el-button type="primary" icon="el-icon-search" size="mini" @click="searchShow = !searchShow" />
           <el-button type="primary" icon="el-icon-refresh" size="mini" @click="handleRefresh" />
@@ -162,9 +163,9 @@
         <el-form-item prop="nickname" size="mini" label="昵称">
           <el-input v-model="update.nickname" placeholder="昵称" />
         </el-form-item>
-<!--        <el-form-item prop="password" size="mini" label="密码">-->
-<!--          <el-input v-model="update.password" type="password" placeholder="密码" />-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item prop="password" size="mini" label="密码">-->
+        <!--          <el-input v-model="update.password" type="password" placeholder="密码" />-->
+        <!--        </el-form-item>-->
       </el-form>
       <span slot="footer" style="text-align: right;">
         <el-button type="primary" size="mini" @click="handleUpdate('updateForm')">确定</el-button>
@@ -192,6 +193,27 @@
         <el-button size="mini" @click="roleShow = false">取消</el-button>
       </span>
     </el-dialog>
+    <!--分配菜单-->
+    <el-dialog
+      v-dialog-drag
+      title="分配菜单"
+      :visible.sync="menuShow"
+      width="400px"
+    >
+      <el-tree
+        ref="menuTree"
+        :data="menus"
+        show-checkbox
+        node-key="value"
+        :props="defaultMenuProps"
+        :default-checked-keys="setMenus"
+        @check="handleSelectMenu"
+      />
+      <span slot="footer" style="text-align: right;">
+        <el-button type="primary" size="mini" @click="handleSetMenu">确定</el-button>
+        <el-button size="mini" @click="menuShow = false">取消</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -205,7 +227,10 @@ import {
   deleteUser,
   getUserRoles,
   setUserRole,
-  getAllRoles
+  getAllRoles,
+  getSelect,
+  getUserMenuId,
+  setUserMenu
 } from '@/api/module/common'
 import { Message, MessageBox } from 'element-ui'
 export default {
@@ -219,11 +244,16 @@ export default {
   data() {
     return {
       roleShow: false,
+      menuShow: false,
       roles: [],
       setRoles: [],
       defaultProps: {
         children: 'children',
         label: 'description'
+      },
+      defaultMenuProps: {
+        children: 'children',
+        label: 'label'
       },
       query: {
         userName: null,
@@ -246,6 +276,8 @@ export default {
       tableData: [],
       searchShow: false,
       options: [],
+      menus: [],
+      setMenus: [],
       rules: {
         username: [
           { required: true, message: '用户名不能为空', trigger: 'blur' }
@@ -271,6 +303,7 @@ export default {
   created() {
     this.setTable()
     this.handleGetAllRoles()
+    this.handleGetAllMenus()
   },
   mounted() {
     this.$nextTick(() => {
@@ -282,6 +315,46 @@ export default {
     }
   },
   methods: {
+    handleGetMenus() {
+      this.setMenus = []
+      getUserMenuId(this.update.id).then(res => {
+        for (const item of res) {
+          this.setMenus.push(item.menuId)
+        }
+        this.$nextTick(() => {
+          this.$refs.menuTree.setCheckedKeys(this.setMenus)
+        })
+        this.menuShow = true
+        return res
+      })
+    },
+    handleSetMenu() {
+      setUserMenu(this.update.id, this.setMenus).then(res => {
+        if (res) {
+          this.setMenus = []
+          this.menuShow = false
+        }
+      })
+    },
+    handleSelectMenu(Nodes, Keys) {
+      this.setMenus = Keys.checkedKeys
+    },
+    handleGetAllMenus() {
+      getSelect('全部').then(res => {
+        this.menus = res
+      })
+    },
+    handleMenu() {
+      if (Object.keys(this.update).length > 0) {
+        this.handleGetMenus()
+      } else {
+        Message({
+          type: 'info',
+          message: '请选择数据',
+          showClose: true
+        })
+      }
+    },
     handleGetAllRoles() {
       getAllRoles().then(res => {
         this.roles = res

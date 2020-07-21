@@ -8,10 +8,13 @@ export function getTable(params) {
     params
   })
 }
-export function getSelect() {
+export function getSelect(type) {
   return request({
     url: '/menu/getSelect',
-    method: 'get'
+    method: 'get',
+    params: {
+      type
+    }
   })
 }
 export function addMenu(data) {
@@ -180,10 +183,29 @@ export function setUserRole(userId, data) {
     data
   })
 }
+export function setUserMenu(userId, data) {
+  return request({
+    url: '/menu/setUserMenu',
+    method: 'post',
+    params: {
+      userId
+    },
+    data
+  })
+}
 
 export function getAllRoles() {
   return request({
     url: '/sysRole/queryAll',
     method: 'get'
+  })
+}
+export function getUserMenuId(id) {
+  return request({
+    url: '/menu/getUserMenuId',
+    method: 'get',
+    params: {
+      id
+    }
   })
 }

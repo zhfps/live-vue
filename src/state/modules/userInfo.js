@@ -15,7 +15,7 @@ const mutations = {
     state.UserInfo = Object.assign({}, userInfo)
   },
   SET_PERMISSIONS: (sate, permissions) => {
-    state.UserInfo = Object.assign({}, Permissions)
+    state.Permissions = Object.assign({}, Permissions)
   },
   SET_ACCESS_TOKEN: (state, token) => {
     const { Access_Token } = state
