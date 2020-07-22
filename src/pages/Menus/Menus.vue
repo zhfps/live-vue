@@ -22,11 +22,11 @@
     </el-card>
     <el-card class="table-content">
       <el-row class="nav-bar">
-        <el-button type="primary" size="mini" @click="show =!show">新增</el-button>
-        <el-button type="warning" size="mini" @click="handleUpdateDialog">修改</el-button>
-        <el-button type="danger" size="mini" @click="handleDelete">删除</el-button>
+        <el-button type="primary" size="mini" :disabled="canAdd" @click="show =!show">新增</el-button>
+        <el-button type="warning" size="mini" :disabled="canUpdate" @click="handleUpdateDialog">修改</el-button>
+        <el-button type="danger" size="mini" :disabled="canDelete" @click="handleDelete">删除</el-button>
         <el-button-group style="float: right;">
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="searchShow = !searchShow" />
+          <el-button type="primary" icon="el-icon-search" size="mini" :disabled="canQuery" @click="searchShow = !searchShow" />
           <el-button type="primary" icon="el-icon-refresh" size="mini" @click="handleRefresh" />
         </el-button-group>
       </el-row>
@@ -54,13 +54,13 @@
             width="180"
           >
             <template slot-scope="{row}">
-<!--              <svg-icon-->
-<!--                class="pre-icon"-->
-<!--                :name="row.meta.icon"-->
-<!--                width="18"-->
-<!--                height="18"-->
-<!--              />-->
-              <i :class="row.meta.icon"></i>
+              <!--              <svg-icon-->
+              <!--                class="pre-icon"-->
+              <!--                :name="row.meta.icon"-->
+              <!--                width="18"-->
+              <!--                height="18"-->
+              <!--              />-->
+              <i :class="row.meta.icon" />
             </template>
           </el-table-column>
           <el-table-column
@@ -113,7 +113,7 @@
           <el-input v-model="menu.name" placeholder="前端页面名称" />
         </el-form-item>
         <el-form-item size="mini" label="图标">
-          <icon-picker v-model="update.icon"></icon-picker>
+          <icon-picker v-model="update.icon" />
         </el-form-item>
         <el-form-item size="mini" label="序号">
           <el-input v-model="menu.sort" placeholder="序号" />
@@ -163,7 +163,7 @@
           <el-input v-model="update.name" placeholder="前端页面名称" />
         </el-form-item>
         <el-form-item size="mini" label="图标">
-          <icon-picker v-model="update.icon"></icon-picker>
+          <icon-picker v-model="update.icon" />
         </el-form-item>
         <el-form-item size="mini" label="序号">
           <el-input v-model="update.sort" placeholder="序号" />
@@ -193,6 +193,7 @@ import './Menus.scss'
 import '@/assets/styles/public.scss'
 import { getTable, getSelect, addMenu, updateMenu, updateDelete } from '@/api/module/common'
 import { Message, MessageBox } from 'element-ui'
+import { getPermission } from '@/plugin/permission'
 export default {
   name: 'Menus',
   data() {
@@ -222,6 +223,20 @@ export default {
           { required: true, message: '不能为空', trigger: 'blur' }
         ]
       }
+    }
+  },
+  computed: {
+    canAdd() {
+      return !getPermission('sys:menu:add')
+    },
+    canUpdate() {
+      return !getPermission('sys:menu:edit')
+    },
+    canDelete() {
+      return !getPermission('sys:menu:del')
+    },
+    canQuery() {
+      return !getPermission('sys:menu:query')
     }
   },
   created() {

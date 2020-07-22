@@ -15,12 +15,12 @@
     </el-card>
     <el-card class="table-content">
       <el-row class="nav-bar">
-        <el-button type="primary" size="mini" @click="show =!show">新增</el-button>
-        <el-button type="warning" size="mini" @click="handleUpdateDialog">修改</el-button>
-        <el-button type="danger" size="mini" @click="handleDelete">删除</el-button>
-        <el-button type="primary" size="mini" @click="handlePermission">权限分配</el-button>
+        <el-button type="primary" size="mini" :disabled="canAdd" @click="show =!show">新增</el-button>
+        <el-button type="warning" size="mini" :disabled="canUpdate" @click="handleUpdateDialog">修改</el-button>
+        <el-button type="danger" size="mini" :disabled="canDelete" @click="handleDelete">删除</el-button>
+        <el-button type="primary" size="mini" :disabled="canSetPermission" @click="handlePermission">权限分配</el-button>
         <el-button-group style="float: right;">
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="searchShow = !searchShow" />
+          <el-button type="primary" icon="el-icon-search" :disabled="canQuery" size="mini" @click="searchShow = !searchShow" />
           <el-button type="primary" icon="el-icon-refresh" size="mini" @click="handleRefresh" />
         </el-button-group>
       </el-row>
@@ -131,13 +131,29 @@ import '@/assets/styles/public.scss'
 import { mapGetters } from 'vuex'
 import { getRoles, CreateRole, UpdateRole, deleteRole, permissionsSelect, getRolePermission, setRolePermission } from '@/api/module/common'
 import { Message, MessageBox } from 'element-ui'
+import { getPermission } from '@/plugin/permission'
 export default {
   name: 'Roles',
   computed: {
     ...mapGetters([
       'rootPath',
       'pageSizeList'
-    ])
+    ]),
+    canAdd() {
+      return !getPermission('sys:role:add')
+    },
+    canUpdate() {
+      return !getPermission('sys:role:edit')
+    },
+    canDelete() {
+      return !getPermission('sys:role:del')
+    },
+    canQuery() {
+      return !getPermission('sys:role:query')
+    },
+    canSetPermission() {
+      return !getPermission('sys:role:setpermission')
+    }
   },
   data() {
     return {

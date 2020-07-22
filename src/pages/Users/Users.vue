@@ -22,13 +22,13 @@
     </el-card>
     <el-card class="table-content">
       <el-row class="nav-bar">
-        <el-button type="primary" size="mini" @click="show =!show">新增</el-button>
-        <el-button type="warning" size="mini" @click="handleUpdateDialog">修改</el-button>
-        <el-button type="danger" size="mini" @click="handleDelete">删除</el-button>
-        <el-button type="primary" size="mini" @click="handleRole">角色分配</el-button>
-        <el-button type="primary" size="mini" @click="handleMenu">菜单分配</el-button>
+        <el-button type="primary" size="mini" :disabled="canAdd" @click="show =!show">新增</el-button>
+        <el-button type="warning" size="mini" :disabled="canUpdate"  @click="handleUpdateDialog">修改</el-button>
+        <el-button type="danger" size="mini" :disabled="canDelete"  @click="handleDelete">删除</el-button>
+        <el-button type="primary" size="mini" :disabled="canSetRole"  @click="handleRole">角色分配</el-button>
+        <el-button type="primary" size="mini" :disabled="canSetMenu"  @click="handleMenu">菜单分配</el-button>
         <el-button-group style="float: right;">
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="searchShow = !searchShow" />
+          <el-button type="primary" icon="el-icon-search" size="mini" :disabled="canQuery" @click="searchShow = !searchShow" />
           <el-button type="primary" icon="el-icon-refresh" size="mini" @click="handleRefresh" />
         </el-button-group>
       </el-row>
@@ -232,6 +232,7 @@ import {
   getUserMenuId,
   setUserMenu
 } from '@/api/module/common'
+import { getPermission } from '@/plugin/permission'
 import { Message, MessageBox } from 'element-ui'
 export default {
   name: 'Users',
@@ -239,7 +240,25 @@ export default {
     ...mapGetters([
       'rootPath',
       'pageSizeList'
-    ])
+    ]),
+    canAdd() {
+      return !getPermission('sys:user:add')
+    },
+    canUpdate() {
+      return !getPermission('sys:user:edit')
+    },
+    canDelete() {
+      return !getPermission('sys:user:del')
+    },
+    canQuery() {
+      return !getPermission('sys:user:query')
+    },
+    canSetRole() {
+      return !getPermission('sys:user:setrole')
+    },
+    canSetMenu() {
+      return !getPermission('sys:user:setmenu')
+    }
   },
   data() {
     return {

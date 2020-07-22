@@ -9,17 +9,17 @@ const state = {
 }
 const mutations = {
   STE_MENUS: (sate, menus) => {
-    state.Menus = Object.assign({}, menus)
+    Object.assign(sate, { Menus: menus })
   },
   SET_USER_INFO: (sate, userInfo) => {
-    state.UserInfo = Object.assign({}, userInfo)
+    Object.assign(sate, { UserInfo: userInfo })
   },
   SET_PERMISSIONS: (sate, permissions) => {
-    state.Permissions = Object.assign({}, Permissions)
+    Object.assign(sate, { Permissions: permissions })
   },
   SET_ACCESS_TOKEN: (state, token) => {
     const { Access_Token } = state
-    Object.assign(state, Access_Token)
+    Object.assign(state, { Access_Token })
   },
   LOGOUT: (state) => {
     deleteCache('user')

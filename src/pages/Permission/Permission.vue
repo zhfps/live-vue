@@ -15,11 +15,11 @@
     </el-card>
     <el-card class="table-content">
       <el-row class="nav-bar">
-        <el-button type="primary" size="mini" @click="show =!show">新增</el-button>
-        <el-button type="warning" size="mini" @click="handleUpdateDialog">修改</el-button>
-        <el-button type="danger" size="mini" @click="handleDelete">删除</el-button>
+        <el-button type="primary" size="mini" :disabled="canAdd" @click="show =!show">新增</el-button>
+        <el-button type="warning" size="mini" :disabled="canUpdate" @click="handleUpdateDialog">修改</el-button>
+        <el-button type="danger" size="mini" :disabled="canDelete" @click="handleDelete">删除</el-button>
         <el-button-group style="float: right;">
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="searchShow = !searchShow" />
+          <el-button type="primary" icon="el-icon-search" size="mini" :disabled="canQuery" @click="searchShow = !searchShow" />
           <el-button type="primary" icon="el-icon-refresh" size="mini" @click="handleRefresh" />
         </el-button-group>
       </el-row>
@@ -122,6 +122,7 @@ import './_Permission.scss'
 import '@/assets/styles/public.scss'
 import { getPermissions, permissionsSelect, createPermissions, updatePermission, deletePermissions } from '@/api/module/common'
 import { Message, MessageBox } from 'element-ui'
+import { getPermission } from '@/plugin/permission'
 export default {
   name: 'Permission',
   data() {
@@ -151,6 +152,20 @@ export default {
           { required: true, message: '不能为空', trigger: 'blur' }
         ]
       }
+    }
+  },
+  computed: {
+    canAdd() {
+      return !getPermission('sys:permission:add')
+    },
+    canUpdate() {
+      return !getPermission('sys:permission:edit')
+    },
+    canDelete() {
+      return !getPermission('sys:permission:del')
+    },
+    canQuery() {
+      return !getPermission('sys:permission:query')
     }
   },
   created() {
