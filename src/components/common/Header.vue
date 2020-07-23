@@ -8,6 +8,7 @@
     <div class="logo">后台管理系统</div>
     <div class="header-right">
       <div class="header-user-con">
+        <header-search class="btn-search"/>
         <!-- 全屏显示 -->
         <div class="btn-fullscreen" @click="handleFullScreen">
           <el-tooltip effect="dark" :content="fullscreen?`取消全屏`:`全屏`" placement="bottom">
@@ -46,8 +47,12 @@
   </div>
 </template>
 <script>
+import HeaderSearch from '@/components/HeaderSearch'
 import { mapGetters, mapActions } from 'vuex'
 export default {
+  components: {
+    HeaderSearch
+  },
   data() {
     return {
       fullscreen: false,
@@ -145,6 +150,15 @@ export default {
     transform: rotate(45deg);
     margin-right: 5px;
     font-size: 24px;
+}
+.btn-search {
+  position: relative;
+  width: 260px;
+  height: 30px;
+  text-align: center;
+  border-radius: 15px;
+  cursor: pointer;
+  color: white;
 }
 .btn-bell,
 .btn-fullscreen {

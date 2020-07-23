@@ -91,7 +91,6 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { getPermission } from '@/plugin/permission'
 export default {
   name: 'Dashboard',
   data() {
@@ -208,10 +207,10 @@ export default {
     ])
   },
   created() {
-    console.log(getPermission('sys:user:add'))
+
   },
   active() {
-    console.log(getPermission('sys:user:add'))
+
   },
   methods: {
     ...mapActions({
