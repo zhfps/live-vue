@@ -9,7 +9,7 @@
     "svg": "vsvg -s ./src/assets/svg -t ./src/icons/svg"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "core-js": "^3.6.4",
     "crypto-js": "^4.0.0",
